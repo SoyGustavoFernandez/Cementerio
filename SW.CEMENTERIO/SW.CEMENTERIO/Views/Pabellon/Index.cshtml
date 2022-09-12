@@ -1,0 +1,131 @@
+﻿@{
+    ViewData["Title"] = "Pabellon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--start breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Lista de Pabellones</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0 align-items-center">
+                <li class="breadcrumb-item active" aria-current="page" id="totalPabellon">0</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="ms-auto">
+        <div class="btn-group">
+            <button type="button" class="btn btn-outline-primary" onclick="verPabellon()">Nuevo <i class="lni lni-plus"></i></button>
+        </div>
+    </div>
+</div>
+<!--end breadcrumb-->
+<hr />
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="tablePabellon" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Ubicación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalPabellon" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id="classModalPabellon">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lblModalPabellon"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="idPabellon" hidden />
+                <form class="row g-3 needs-validation" id="formPabellon" novalidate method="post">
+                    <div class="col-md-12">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombrePabellon" name="nombrePabellon" required>
+                        <div class="invalid-feedback">Es un campo obligatorio</div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-check mb-3">
+                            <input type="radio" class="form-check-input" id="rbPabellon" name="rbPabellon" required value="1">
+                            <label class="form-check-label" for="rbPabellon">Pabellón</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="radio" class="form-check-input" id="rbMausoleo" name="rbPabellon" required value="2">
+                            <label class="form-check-label" for="rbMausoleo">Mausoleo</label>
+                            <div class="invalid-feedback">Es un campo obligatorio</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" id="tablaAdicional">
+                        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                            <div class="ms-auto">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-primary" onclick="verNicho()">Nuevo Nicho <i class="lni lni-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-check">
+                            <table id="tableNicho" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Estado</th>
+                                        <th># Difuntos</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="addPabellon()" id="btnAddPabellon">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalNicho" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" class="form-control detalle" id="idNicho" />
+                <h5 class="modal-title" id="lblmodalNicho"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3" novalidate id="formNicho">
+                    <div class="col-md-6">
+                        <label for="codigoNicho" class="form-label">Código</label>
+                        <input type="text" class="form-control detalle" id="codigoNicho" name="codigoNicho" required />
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="codigoNicho" class="form-label"># Difuntos</label>
+                        <input type="text" class="form-control detalle soloNumero" id="numDifNicho" name="numDifNicho" required/>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+                    <div class="col-12 text-right">
+                        <button class="btn btn-primary" type="button" onclick="addNicho()" id="btnAddNicho"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/pabellon.js"></script>

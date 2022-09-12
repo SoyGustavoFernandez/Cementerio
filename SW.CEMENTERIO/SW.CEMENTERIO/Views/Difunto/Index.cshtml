@@ -1,0 +1,97 @@
+﻿@{
+    ViewData["Title"] = "Difunto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--start breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Lista de Difuntos</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0 align-items-center">
+                <li class="breadcrumb-item active" aria-current="page" id="totalDifunto">0</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="ms-auto">
+        <div class="btn-group">
+            <button type="button" class="btn btn-outline-primary" onclick="verDifunto()">Nuevo <i class="lni lni-plus"></i></button>
+        </div>
+    </div>
+</div>
+<!--end breadcrumb-->
+<hr />
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="tableDifunto" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ape. Paterno</th>
+                        <th>Ape. Materno</th>
+                        <th>Nombres</th>
+                        <th>Fec. Defunción</th>
+                        <th>Pabellón</th>
+                        <th>Nicho</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalDifunto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id="classModalDifunto">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lblModalDifunto"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="idNichoDifunto" hidden />
+                <input type="text" id="idDifunto" hidden />
+                <form class="row g-3 needs-validation" id="formDifunto" novalidate method="post">
+                    <div class="col-md-6">
+                        <label class="form-label">Apellido Paterno</label>
+                        <input type="text" class="form-control" id="apePaterno" name="apePaterno" required>
+                        <div class="invalid-feedback">Es un campo obligatorio</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Apellido Materno</label>
+                        <input type="text" class="form-control" id="apeMaterno" name="apeMaterno" required>
+                        <div class="invalid-feedback">Es un campo obligatorio</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="nombreDifunto" name="nombreDifunto" required>
+                        <div class="invalid-feedback">Es un campo obligatorio</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Fecha Defunción</label>
+                        <input class="result form-control" type="text" id="fecDefuncion" placeholder="dd/mm/yyyy">
+                        <div class="invalid-feedback">Es un campo obligatorio</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Pabellón</label>
+                        <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" id="selectPabellon" onchange="cargarNicho(this.value)"></select>
+                        <div class="invalid-feedback">Es un campo obligatorio</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Nicho</label>
+                        <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" id="selectNicho"></select>
+                        <div class="invalid-feedback">Es un campo obligatorio</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="addDifunto()" id="btnAddDifunto">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/Difunto.js"></script>

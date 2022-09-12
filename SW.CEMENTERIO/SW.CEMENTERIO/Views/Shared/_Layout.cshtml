@@ -1,0 +1,230 @@
+﻿<!doctype html>
+<html lang="en" class="light-theme">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- loader-->
+    <link href="~/assets/css/pace.min.css" rel="stylesheet" />
+    <script src="~/assets/js/pace.min.js"></script>
+
+    <!--plugins-->
+    <link href="~/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="~/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="~/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <link href="~/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="~/assets/css/sweetalert2.css" rel="stylesheet" />
+    <link href="~/assets/plugins/datetimepicker/css/classic.css" rel="stylesheet" />
+    <link href="~/assets/plugins/datetimepicker/css/classic.time.css" rel="stylesheet" />
+    <link href="~/assets/plugins/datetimepicker/css/classic.date.css" rel="stylesheet" />
+    <link href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css" rel="stylesheet" />
+
+    <!-- CSS Files -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet">
+    <link href="~/assets/css/icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <!--Theme Styles-->
+    <link href="~/assets/css/header-colors.css" rel="stylesheet" />
+
+    <!-- JS Files-->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/plugins/simplebar/js/simplebar.min.js"></script>
+    <script src="~/assets/plugins/metismenu/js/metisMenu.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <!--plugins-->
+    <script src="~/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script src="~/assets/plugins/chartjs/chart.min.js"></script>
+    <script src="~/assets/js/index.js"></script>
+    <script src="~/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/assets/js/table-datatable.js"></script>
+    <script src="~/assets/js/sweetalert2.min.js"></script>
+    <script src="~/assets/js/sweetalert2.init.js"></script>
+    <script src="~/assets/plugins/datetimepicker/js/legacy.js"></script>
+    <script src="~/assets/plugins/datetimepicker/js/picker.js"></script>
+    <script src="~/assets/plugins/datetimepicker/js/picker.time.js"></script>
+    <script src="~/assets/plugins/datetimepicker/js/picker.date.js"></script>
+    <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/moment.min.js"></script>
+    <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js"></script>
+    <script src="~/assets/js/form-date-time-pickes.js"></script>
+
+    <!-- Main JS-->
+    <script src="assets/js/main.js"></script>
+    <script src="~/js/util.js"></script>
+    <title>SYN-UI - Bootstrap Admin Template</title>
+</head>
+<body>
+
+
+    <!--start wrapper-->
+    <div class="wrapper">
+
+        <!--start sidebar -->
+        <aside class="sidebar-wrapper" data-simplebar="true">
+            <div class="sidebar-header">
+                <div>
+                    <img src="~/assets/images/logo-icon-2.png" class="logo-icon" alt="logo icon">
+                </div>
+                <div>
+                    <h4 class="logo-text">SYN-UI</h4>
+                </div>
+                <div class="toggle-icon ms-auto">
+                    <ion-icon name="menu-sharp"></ion-icon>
+                </div>
+            </div>
+            <!--navigation-->
+            <ul class="metismenu" id="menu">
+                <li>
+                    <a href="/Dashboard">
+                        <div class="parent-icon">
+                            <i class="lni lni-dashboard"></i>
+                        </div>
+                        <div class="menu-title">Dashboard</div>
+                    </a>
+                </li>
+                <li class="menu-label">Cementerio</li>
+                <li>
+                    <a href="/Difunto">
+                        <div class="parent-icon">
+                            <ion-icon name="leaf-sharp"></ion-icon>
+                        </div>
+                        <div class="menu-title">Difunto</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Pabellon">
+                        <div class="parent-icon">
+                            <ion-icon name="home-sharp"></ion-icon>
+                        </div>
+                        <div class="menu-title">Pabellón</div>
+                    </a>
+                </li>
+                <li class="menu-label">Mantenimiento</li>
+                <li>
+                    <a href="/Trabajador">
+                        <div class="parent-icon">
+                            <i class="lni lni-consulting"></i>
+                        </div>
+                        <div class="person-circle-sharp">Trabajador</div>
+                    </a>
+                </li>
+            </ul>
+            <!--end navigation-->
+        </aside>
+        <!--end sidebar -->
+        <!--start top header-->
+        <header class="top-header">
+            <nav class="navbar navbar-expand gap-3">
+                <div class="mobile-menu-button"><ion-icon name="menu-sharp"></ion-icon></div>
+                <div class="top-navbar-right ms-auto">
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item dropdown dropdown-user-setting">
+                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;" data-bs-toggle="dropdown">
+                                <div class="user-setting">
+                                    <img src="~/assets/images/avatars/06.png" class="user-img" alt="">
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex flex-row align-items-center gap-2">
+                                            <img src="~/assets/images/avatars/06.png" alt="" class="rounded-circle" width="54" height="54">
+                                            <div class="">
+                                                <h6 class="mb-0 dropdown-user-name">Jhon Deo</h6>
+                                                <small class="mb-0 dropdown-user-designation text-secondary">UI Developer</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class=""><ion-icon name="person-outline"></ion-icon></div>
+                                            <div class="ms-3"><span>Profile</span></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class=""><ion-icon name="settings-outline"></ion-icon></div>
+                                            <div class="ms-3"><span>Setting</span></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class=""><ion-icon name="speedometer-outline"></ion-icon></div>
+                                            <div class="ms-3"><span>Dashboard</span></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class=""><ion-icon name="wallet-outline"></ion-icon></div>
+                                            <div class="ms-3"><span>Earnings</span></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class=""><ion-icon name="cloud-download-outline"></ion-icon></div>
+                                            <div class="ms-3"><span>Downloads</span></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class=""><ion-icon name="log-out-outline"></ion-icon></div>
+                                            <div class="ms-3"><span>Logout</span></div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </nav>
+        </header>
+        <!--end top header-->
+        <!-- start page content wrapper-->
+        <div class="page-content-wrapper">
+            <!-- start page content-->
+            <div class="page-content">
+
+                @RenderBody()
+            </div>
+            <!-- end page content-->
+        </div>
+        <!--end page content wrapper-->
+        <!--start footer-->
+        <footer class="footer">
+            <div class="footer-text">
+                Copyright © 2021. All right reserved.
+            </div>
+        </footer>
+        <!--end footer-->
+        <!--Start Back To Top Button-->
+        <a href="javaScript:;" class="back-to-top"><ion-icon name="arrow-up-outline"></ion-icon></a>
+        <!--End Back To Top Button-->
+        <!--start overlay-->
+        <div class="overlay nav-toggle-icon"></div>
+        <!--end overlay-->
+
+    </div>
+    <!--end wrapper-->
+</body>
+</html>
