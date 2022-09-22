@@ -859,6 +859,7 @@ function cargarNicho(_idPabellon) {
 
 
 function limpiarDatos() {
+    $('input').val('');
     $('input[class="form-control"]').val('');
     $('input[class="form-control soloNumero"]').val('');
     $('input[class="form-check-input"]').prop("checked", false);
@@ -866,6 +867,7 @@ function limpiarDatos() {
 }
 
 function limpiarDatosDetalle() {
+    $('input').val('');
     $('input[class="form-control detalle"]').val('');
     $('input[class="form-control detalle soloNumero"]').val('');
 }

@@ -1,7 +1,10 @@
 ﻿$(document).ready(function () {
     buscar();
     $('#fecDefuncion').bootstrapMaterialDatePicker({
-        time: false
+        format: 'DD/MM/YYYY',
+        time: false,
+        lang: 'es',
+        cancelText: 'CERRAR'
     });
 });
 
@@ -22,6 +25,13 @@ function buscar() {
             { "name": "nicS_CODNICHO", "data": "nicS_CODNICHO", "class": "text-center" }
         ],
         columnDefs: [
+            {
+                targets: 3,
+                data: 'difD_FECHADEFUNCION',
+                render: function (data) {
+                    return moment(data).format('DD/MM/YYYY')
+                }
+            },
             {
                 targets: 6,
                 data: 'nicdifN_IDNICHODIFUNTO',
@@ -81,6 +91,7 @@ function addDifunto() {
                 mostrarMensaje("Error", "Codigo: " + error.status + " - " + error.responseText, 2, true);
             }
         });
+    $("#modalDifunto").modal("hide");
     }
 }
 
@@ -137,7 +148,7 @@ function verDifunto(id) {
                     $("#apePaterno").val(data.datos[0].difS_APEPATERNO);
                     $("#apeMaterno").val(data.datos[0].difS_APEMATERNO);
                     $("#nombreDifunto").val(data.datos[0].difS_NOMBRES);
-                    $("#fecDefuncion").val(data.datos[0].difD_FECHADEFUNCION);
+                    $("#fecDefuncion").val(moment(data.datos[0].difD_FECHADEFUNCION).format('DD/MM/YYYY'));
                     $("#selectPabellon").val(data.datos[0].pabN_IDPABELLON);
                     $("#selectNicho").val(data.datos[0].nicN_IDNICHO);
                     $("#lblModalDifunto").html(data.datos[0].difS_NOMBRES);

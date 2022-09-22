@@ -63,7 +63,8 @@ namespace SW.CEMENTERIO.DataAccessLayer
 			}
 
 			try{
-				ejecutarNonQuery("TA_NICHO_DIFUNTO_Update", parameters);
+				ejecutarScalar("TA_NICHO_DIFUNTO_Update", parameters);
+				//ejecutarNonQuery("TA_NICHO_DIFUNTO_Update", parameters);
 			}
 			catch (Exception ex)
 			{
