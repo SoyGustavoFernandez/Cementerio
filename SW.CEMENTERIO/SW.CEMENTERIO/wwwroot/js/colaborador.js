@@ -22,10 +22,10 @@ function buscar() {
                 data: 'colN_IDCOLABORADOR',
                 orderable: false,
                 width: "20%",
-                render: function (data, display, full) {
+                render: function (data) {
                     return `<button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="verColaborador(` + data + `)"><i class="fadeIn animated bx bx-pencil"></i></button>
                             <button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="eliminarColaborador(` + data + `)"><i class="fadeIn animated bx bx-trash-alt"></i></button>
-                            <button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="reenviarCorreo('` + full.colS_CORREO + `')"><i class="fadeIn animated bx bx-mail-send"></i></button>`;
+                            <button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="reenviarCorreo(` + data + `)"><i class="fadeIn animated bx bx-mail-send"></i></button>`;
                 }
             }
         ],
@@ -140,6 +140,17 @@ function verColaborador(id) {
     $("#modalColaborador").modal("show");
 }
 
-function reenviarCorreo(email) {
-    alert(email);
+function reenviarCorreo(id) {
+    $.ajax({
+        type: "POST",
+        url: "Colaborador/RecuperaClave",
+        data: { idColaborador: id },
+        dataType: 'json',
+        success: function (data) {
+            mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
+        },
+        error: function (error) {
+            mostrarMensaje("Error", "Codigo: " + error.status + " - " + error.responseText, 2, true);
+        }
+    });
 }

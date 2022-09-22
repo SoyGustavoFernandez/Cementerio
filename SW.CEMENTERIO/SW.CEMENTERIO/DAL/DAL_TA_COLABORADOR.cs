@@ -69,7 +69,8 @@ namespace SW.CEMENTERIO.DataAccessLayer
 			}
 
 			try{
-				ejecutarNonQuery("TA_COLABORADOR_Update", parameters);
+				ejecutarScalar("TA_COLABORADOR_Update", parameters);
+				//ejecutarNonQuery("TA_COLABORADOR_Update", parameters);
 			}
 			catch (Exception ex)
 			{

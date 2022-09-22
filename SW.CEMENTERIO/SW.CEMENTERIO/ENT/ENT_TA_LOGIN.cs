@@ -2,7 +2,7 @@ using System;
 
 namespace SW.CEMENTERIO.EntityLayer
 {
-	public class ENT_TA_LOGIN
+	public class ENT_TA_LOGIN : ENT_TA_COLABORADOR
 	{
 		#region Constructors
 

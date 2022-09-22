@@ -24,11 +24,7 @@ namespace SW.CEMENTERIO.DataAccessLayer
 					new SqlParameter("@LOGN_IDCOLABORADOR", x_oENT_TA_LOGIN.LOGN_IDCOLABORADOR),
 					new SqlParameter("@LOGS_USUARIO", x_oENT_TA_LOGIN.LOGS_USUARIO),
 					new SqlParameter("@LOGS_CLAVE", x_oENT_TA_LOGIN.LOGS_CLAVE),
-					new SqlParameter("@LOGS_USUREGISTRO", x_oENT_TA_LOGIN.LOGS_USUREGISTRO),
-					new SqlParameter("@LOGD_FECREGISTRO", x_oENT_TA_LOGIN.LOGD_FECREGISTRO),
-					new SqlParameter("@LOGS_USUMODIFICA", x_oENT_TA_LOGIN.LOGS_USUMODIFICA),
-					new SqlParameter("@LOGD_FECMODIFICA", x_oENT_TA_LOGIN.LOGD_FECMODIFICA),
-					new SqlParameter("@LOGB_ESTADO", x_oENT_TA_LOGIN.LOGB_ESTADO)
+					new SqlParameter("@LOGS_USUREGISTRO", x_oENT_TA_LOGIN.LOGS_USUREGISTRO)
 				};
 			}
 			catch (Exception ex)
@@ -59,11 +55,8 @@ namespace SW.CEMENTERIO.DataAccessLayer
 					new SqlParameter("@LOGN_IDCOLABORADOR", x_oENT_TA_LOGIN.LOGN_IDCOLABORADOR),
 					new SqlParameter("@LOGS_USUARIO", x_oENT_TA_LOGIN.LOGS_USUARIO),
 					new SqlParameter("@LOGS_CLAVE", x_oENT_TA_LOGIN.LOGS_CLAVE),
-					new SqlParameter("@LOGS_USUREGISTRO", x_oENT_TA_LOGIN.LOGS_USUREGISTRO),
-					new SqlParameter("@LOGD_FECREGISTRO", x_oENT_TA_LOGIN.LOGD_FECREGISTRO),
 					new SqlParameter("@LOGS_USUMODIFICA", x_oENT_TA_LOGIN.LOGS_USUMODIFICA),
-					new SqlParameter("@LOGD_FECMODIFICA", x_oENT_TA_LOGIN.LOGD_FECMODIFICA),
-					new SqlParameter("@LOGB_ESTADO", x_oENT_TA_LOGIN.LOGB_ESTADO)
+					new SqlParameter("@LOGD_FECMODIFICA", x_oENT_TA_LOGIN.LOGD_FECMODIFICA)
 				};
 			}
 			catch (Exception ex)
