@@ -8,7 +8,7 @@ GO
 NOMBRE           : TA_PABELLON_Insert
 DESCRIPCIÓN      : Permite insertar un registro en la tabla TA_PABELLON
 FECHA CREACIÓN   : 10/09/2022
-CREADOR          : SourceGenerator 
+CREADOR          : Gustavo Fernández 
 SINTAXIS         :  
             TA_PABELLON_Insert
 ******************************************************************************/

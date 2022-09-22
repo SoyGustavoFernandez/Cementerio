@@ -8,7 +8,7 @@ GO
 NOMBRE           : TA_NICHO_DIFUNTO_Select
 DESCRIPCIÓN      : Permite seleccionar un registro de la tabla TA_NICHO_DIFUNTO por su primary key
 FECHA CREACIÓN   : 11/09/2022
-CREADOR          : SourceGenerator 
+CREADOR          : Gustavo Fernández 
 SINTAXIS         :  
             TA_NICHO_DIFUNTO_Select
 ******************************************************************************/

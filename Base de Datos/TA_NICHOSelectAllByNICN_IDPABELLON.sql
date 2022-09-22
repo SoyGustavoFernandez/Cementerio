@@ -8,7 +8,7 @@ GO
 NOMBRE           : TA_NICHOSelectAllByNICN_IDPABELLON
 DESCRIPCIÓN      : Permite seleccionar todos los registros de la tabla TA_NICHO por su foreign key
 FECHA CREACIÓN   : 11/09/2022
-CREADOR          : SourceGenerator 
+CREADOR          : Gustavo Fernández 
 SINTAXIS         :  
             TA_NICHOSelectAllByNICN_IDPABELLON
 ******************************************************************************/

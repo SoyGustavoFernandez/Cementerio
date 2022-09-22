@@ -8,7 +8,7 @@ GO
 NOMBRE           : TA_NICHO_DIFUNTO_SelectAll
 DESCRIPCIÓN      : Permite seleccionar todos los registros de la tabla TA_NICHO_DIFUNTO
 FECHA CREACIÓN   : 11/09/2022
-CREADOR          : SourceGenerator 
+CREADOR          : Gustavo Fernández 
 SINTAXIS         :  
             TA_NICHO_DIFUNTO_SelectAll
 ******************************************************************************/

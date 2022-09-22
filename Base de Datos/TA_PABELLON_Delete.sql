@@ -8,7 +8,7 @@ GO
 NOMBRE           : TA_PABELLON_Delete
 DESCRIPCIÓN      : Permite eliminar de forma permanente un registro en la tabla TA_PABELLON por su primary key
 FECHA CREACIÓN   : 10/09/2022
-CREADOR          : SourceGenerator 
+CREADOR          : Gustavo Fernández 
 SINTAXIS         :  
             TA_PABELLON_Delete
 ******************************************************************************/
