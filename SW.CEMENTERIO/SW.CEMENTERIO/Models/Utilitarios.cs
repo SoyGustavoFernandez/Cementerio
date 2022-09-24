@@ -12,47 +12,187 @@ namespace SW.CEMENTERIO.Models
             return new Random().Next(10000, 99999).ToString();
         }
 
-        public static string EncryptTripleDES(string Plaintext, string strKey)
+        private const string CRYPT_KEY = "xkKqH3aUDcp4UrSlTuwvFiBtJVA+bIc51NhR3tAkNnM=";
+
+        private static byte[] Encriptar(string password, byte[] Key, byte[] IV)
         {
-            byte[] clearBytes = Encoding.Unicode.GetBytes(Plaintext);
-            using (Aes encryptor = Aes.Create())
+            if (password == null || password.Length <= 0)
             {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(strKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(clearBytes, 0, clearBytes.Length);
-                        cs.Close();
-                    }
-                    Plaintext = Convert.ToBase64String(ms.ToArray());
-                }
+                throw new ApplicationDataUtilException(
+                         AplicationDataUtilExceptionIds.ValorDePasswordNulo
+                         , "La contraseña a encriptar es nula o es unan cadena vacía."
+                         , new object[] { null });
             }
-            return Plaintext;
+            if (Key == null || Key.Length <= 0)
+            {
+                throw new ApplicationDataUtilException(
+                        AplicationDataUtilExceptionIds.ValorDeLlaveNulo
+                        , "La llave es nula o el tamaño del arreglo es menor igual a cero."
+                        , new object[] { null });
+            }
+            if (IV == null || IV.Length <= 0)
+            {
+                throw new ApplicationDataUtilException(
+                        AplicationDataUtilExceptionIds.ValorDeLlaveNulo
+                        , "El vector de inicialización es nulo o el tamaño del arreglo es menor igual a cero."
+                        , new object[] { null });
+            }
+
+            MemoryStream msEncrypt = null;
+            CryptoStream csEncrypt = null;
+            StreamWriter swEncrypt = null;
+
+            AesCryptoServiceProvider aesManagedAlg = null;
+
+            try
+            {
+                aesManagedAlg = new AesCryptoServiceProvider();
+                aesManagedAlg.Key = Key;
+                aesManagedAlg.IV = IV;
+
+                ICryptoTransform encryptor = aesManagedAlg.CreateEncryptor(aesManagedAlg.Key, aesManagedAlg.IV);
+
+                msEncrypt = new MemoryStream();
+                csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
+                swEncrypt = new StreamWriter(csEncrypt);
+
+                swEncrypt.Write(password);
+            }
+            finally
+            {
+                if (swEncrypt != null)
+                    swEncrypt.Close();
+                if (csEncrypt != null)
+                    csEncrypt.Close();
+                if (msEncrypt != null)
+                    msEncrypt.Close();
+
+                if (aesManagedAlg != null)
+                    aesManagedAlg.Clear();
+            }
+
+            return msEncrypt.ToArray();
+
         }
 
-        public static string DecryptTripleDES(string base64Text, string strKey, byte[] IV)
+        private static string Desencriptar(string password, byte[] Key, byte[] IV)
         {
-            base64Text = base64Text.Replace(" ", "+");
-            byte[] cipherBytes = Convert.FromBase64String(base64Text);
-            using (Aes encryptor = Aes.Create())
+            byte[] passwordCifrado;
+            passwordCifrado = CadenaBase64ABytes(password);
+
+            if (password == null || password.Length <= 0)
             {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(strKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(cipherBytes, 0, cipherBytes.Length);
-                        cs.Close();
-                    }
-                    base64Text = Encoding.Unicode.GetString(ms.ToArray());
-                }
+                throw new ApplicationDataUtilException(
+                         AplicationDataUtilExceptionIds.ValorDePasswordNulo
+                         , "La contraseña a desencriptar es nula o es una cadena vacía."
+                         , new object[] { null });
             }
-            return base64Text;
+            if (Key == null || Key.Length <= 0)
+            {
+                throw new ApplicationDataUtilException(
+                        AplicationDataUtilExceptionIds.ValorDeLlaveNulo
+                        , "La llave es nula o el tamaño del arreglo es menor igual a cero."
+                        , new object[] { null });
+            }
+            if (IV == null || IV.Length <= 0)
+            {
+                throw new ApplicationDataUtilException(
+                        AplicationDataUtilExceptionIds.ValorDeLlaveNulo
+                        , "El vector de inicialización es nulo o el tamaño del arreglo es menor igual a cero."
+                        , new object[] { null });
+            }
+
+            MemoryStream msDecrypt = null;
+            CryptoStream csDecrypt = null;
+            StreamReader srDecrypt = null;
+
+            AesCryptoServiceProvider aesManagedAlg = null;
+
+            string plaintext = null;
+
+            try
+            {
+                aesManagedAlg = new AesCryptoServiceProvider();
+                aesManagedAlg.Key = Key;
+                aesManagedAlg.IV = IV;
+
+                ICryptoTransform decryptor = aesManagedAlg.CreateDecryptor(aesManagedAlg.Key, aesManagedAlg.IV);
+
+                msDecrypt = new MemoryStream(passwordCifrado);
+                csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
+                srDecrypt = new StreamReader(csDecrypt);
+
+                plaintext = srDecrypt.ReadToEnd();
+            }
+            finally
+            {
+                if (srDecrypt != null)
+                    srDecrypt.Close();
+                if (csDecrypt != null)
+                    csDecrypt.Close();
+                if (msDecrypt != null)
+                    msDecrypt.Close();
+
+                if (aesManagedAlg != null)
+                    aesManagedAlg.Clear();
+            }
+
+            return plaintext;
         }
+
+        private static byte[] CadenaBase64ABytes(string valor)
+        {
+            return (string.IsNullOrEmpty(valor) == false ? System.Convert.FromBase64String(valor) : null);
+        }
+
+        private static string BytesACadenaBase64(byte[] valor)
+        {
+            return ((valor != null && valor.Length >= 0) ? System.Convert.ToBase64String(valor) : string.Empty);
+        }
+
+        public static string EncriptarPassword(string strPassword)
+        {
+            try
+            {
+                byte[] valorVector = new byte[16];
+
+                Random random = new Random(20110103);
+                random.NextBytes(valorVector);
+
+                string ivstring = BytesACadenaBase64(valorVector);
+                byte[] IV = CadenaBase64ABytes(ivstring);
+
+                byte[] Key = CadenaBase64ABytes(CRYPT_KEY);
+
+                return BytesACadenaBase64(Encriptar(strPassword, Key, IV));
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+
+        }
+
+        public static string DesencriptarPassword(string strPassword)
+        {
+            try
+            {
+                byte[] valorVector = new byte[16];
+
+                Random random = new Random(20110103);
+                random.NextBytes(valorVector);
+                string ivstring = BytesACadenaBase64(valorVector);
+
+                byte[] Key = CadenaBase64ABytes(CRYPT_KEY);
+                byte[] IV = CadenaBase64ABytes(ivstring);
+
+                return Desencriptar(strPassword, Key, IV);
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+
     }
 }

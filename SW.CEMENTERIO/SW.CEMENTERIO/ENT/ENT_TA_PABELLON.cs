@@ -67,7 +67,7 @@ namespace SW.CEMENTERIO.EntityLayer
 		/// <summary>
 		/// Gets or sets the PABS_TIPO value. 
 		/// </summary>
-		public int PABS_TIPO { get; set; }
+		public int PABS_TIPO { get; set; }	// 1: Pabellón		2: Mausoleo
 
 		/// <summary>
 		/// Gets or sets the PABS_UBICACION value. 

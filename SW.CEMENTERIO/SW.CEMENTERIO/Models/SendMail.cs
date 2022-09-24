@@ -1,136 +1,160 @@
-﻿using SW.CEMENTERIO.ENT;
+﻿using Microsoft.AspNetCore.Http;
+using SW.CEMENTERIO.ENT;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SW.CEMENTERIO.Models
 {
     public class SendMail
     {
-        public static async Task<bool> EnviarCorreoContrato(string correo, string correoCC, string CCO, int idtipo, Dictionary<string, string> parameters, string asunto, byte[] documento = null)
+        public static string EnviarCorreo(string x_Correo, string x_CorreoCC, string x_CorreoCO, string Nombre, string x_Titulo, string x_Mensaje)
         {
-            ENT_SendMailPersonalizado oBESendMail = new ENT_SendMailPersonalizado();
-            oBESendMail.Destinatarios = new List<string>();
-            oBESendMail.DestinatariosCC = new List<string>();
-            oBESendMail.DestinatariosCO = new List<string>();
-            oBESendMail.Parametros = new Dictionary<string, string>();
-            oBESendMail.ListadoColumnas = new Dictionary<string, List<string>>();
-            oBESendMail.ListadoFilas = new Dictionary<string, List<List<string>>>();
+            System.Net.Mail.MailMessage oMail = new System.Net.Mail.MailMessage();
+            System.Net.Mail.SmtpClient oSMTP = new System.Net.Mail.SmtpClient();
+            string Error = string.Empty;
 
-            string[] correos = correo.Split(';');
-            string[] correosCC = correoCC.Split(';');
-            string[] correosCO = CCO.Split(';');
-
-            foreach (var item in correos)
-            {
-                oBESendMail.Destinatarios.Add(item);
-            }
-            foreach (var item in correosCC)
-            {
-                oBESendMail.DestinatariosCC.Add(item);
-            }
-            foreach (var item in correosCO)
-            {
-                oBESendMail.DestinatariosCO.Add(item);
-            }
-
-            var attachment = new Dictionary<string, byte[]>();
-
-            switch (idtipo)
-            {
-                case 1: // Modelo de correo que llega al jefe para que gestione la(s) renovación(es) (este correo debe llegar a diario hasta que se gestione)
-                    oBESendMail.Parametros.Add("CantContratos", parameters.First(x => x.Key == "CantContratos").Value);
-                    oBESendMail.Parametros.Add("Periodo", parameters.First(x => x.Key == "Periodo").Value);
-                    oBESendMail.Plantilla = "autoservicio.contrato.porgestionar.html"; // https://losportalesdev.blob.core.windows.net/central/plantillas.correo.interno/autoservicio.contrato.porgestionar.html
-                    break;
-                case 2: // Modelo de correo que llega a CH cuando el jefe aprueba una renovación
-                    oBESendMail.Parametros.Add("Cantidad", parameters.First(x => x.Key == "Cantidad").Value);
-                    oBESendMail.Parametros.Add("Solicitante", parameters.First(x => x.Key == "Solicitante").Value);
-                    oBESendMail.Plantilla = "autoservicio.contrato.gestionado.masivo.renovacion.toCH.html";
-                    break;
-                case 3: // Modelo de correo que llega a CH cuando el jefe no renueva
-                    oBESendMail.Parametros.Add("Cantidad", parameters.First(x => x.Key == "Cantidad").Value);
-                    oBESendMail.Parametros.Add("Solicitante", parameters.First(x => x.Key == "Solicitante").Value);
-                    oBESendMail.Plantilla = "autoservicio.contrato.gestionado.masivo.norenueva.toCH.html";
-                    break;
-                case 4: // Modelo de correo que llega a CH cuando el jefe autoriza el pase a estable
-                    oBESendMail.Parametros.Add("Cantidad", parameters.First(x => x.Key == "Cantidad").Value);
-                    oBESendMail.Parametros.Add("Solicitante", parameters.First(x => x.Key == "Solicitante").Value);
-                    oBESendMail.Plantilla = "autoservicio.contrato.gestionado.masivo.estable.toCH.html";
-                    break;
-                case 5: // Modelo de correo que llega al jefe cuando CH observa una renovación (este proceso debe ser individual)
-                    oBESendMail.Parametros.Add("Colaborador", parameters.First(x => x.Key == "Colaborador").Value);
-                    oBESendMail.Parametros.Add("Observacion", parameters.First(x => x.Key == "Observacion").Value);
-                    oBESendMail.Plantilla = "autoservicio.contrato.observado.html";
-                    break;
-                case 6: // Modelo de correo que llega al jefe cuando CH elabora la renovación o estable y está lista para descargar (este correo debe llegar a diario hasta que se cierre el flujo)
-                    oBESendMail.Parametros.Add("CantContratos", parameters.First(x => x.Key == "CantContratos").Value);
-                    oBESendMail.Plantilla = "autoservicio.contrato.gestionarfirma.html";
-                    break;
-                case 7: // Modelo de correo que llega al jefe informando las NO RENOVACIONES (este correo debe llegar el penúltimo día hábil del mes)
-                    oBESendMail.Parametros.Add("CantContratos", parameters.First(x => x.Key == "CantContratos").Value);
-                    oBESendMail.Parametros.Add("Colaboradores", parameters.First(x => x.Key == "Colaboradores").Value);
-                    oBESendMail.Plantilla = "autoservicio.contrato.norenovaciones.html";
-                    break;
-                case 8: // Modelo de correo que llega al jefe cuando CH rechaza un documento cargado por el jefe (este proceso debe ser individual)
-                    oBESendMail.Parametros.Add("Colaborador", parameters.First(x => x.Key == "Colaborador").Value);
-                    oBESendMail.Plantilla = "autoservicio.contrato.firmarechazado.html";
-                    break;
-                case 9: // Modelo de correo que se envia al jefe aprobador de contrato para notificar que el documento esta listo para descargar
-                    oBESendMail.Parametros.Add("CantContratos", parameters.First(x => x.Key == "CantContratos").Value);
-                    oBESendMail.Plantilla = "autoservicio.contrato.notificar.aprobador.html";
-                    break;
-                case 10: // Modelo de correo que se envia al colaborador para notificar que el documento esta listo para descargar
-                    oBESendMail.Parametros.Add("TipoDocumento", parameters.First(x => x.Key == "TipoDocumento").Value);
-                    oBESendMail.Plantilla = "autoservicio.contrato.notificar.colaborador.html";
-
-                    attachment.Add(parameters.First(x => x.Key == "NombreDocumento").Value, documento);
-                    oBESendMail.Attachments = attachment;
-                    break;
-                case 11: // Modelo de correo que llega a CH cuando el jefe solicita el cese por periodo de prueba
-                    oBESendMail.Parametros.Add("Cantidad", parameters.First(x => x.Key == "Cantidad").Value);
-                    oBESendMail.Parametros.Add("Solicitante", parameters.First(x => x.Key == "Solicitante").Value);
-                    oBESendMail.Plantilla = "autoservicio.contrato.masivo.cese.toCH.html";
-                    break;
-                case 12: // Modelo de correo que llega al jefe informando las SOLICITUDES DE CESE (este correo debe llegar el penúltimo día hábil del mes)
-                    oBESendMail.Parametros.Add("CantContratos", parameters.First(x => x.Key == "CantContratos").Value);
-                    oBESendMail.Parametros.Add("Colaboradores", parameters.First(x => x.Key == "Colaboradores").Value);
-                    oBESendMail.Plantilla = "autoservicio.contrato.cese.html";
-                    break;
-            }
-
-            oBESendMail.Asunto = "Modulo de contratos - " + asunto;
-            oBESendMail.Correo = "cementeriometropolitanopiura@gmail.com";// ConfigurationManager.AppSettings["CorreoCementerio"];
-            oBESendMail.Contrasena = "UTP_C3m3nterio2022*"; //ConfigurationManager.AppSettings["ContrasenaCementerio"];
-
-            HttpClient client = new HttpClient();
-
-            // Request headers
-            client.BaseAddress = new Uri("http://devapi-lp.azure-api.net"); //new Uri(ConfigurationManager.AppSettings["ApimURI"]);
-            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "1f3fbd357ad3483d9fecd07a380b7420"); //"Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["ApimSubscriptionKey"]);
-
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            var uri = "/EnvioMails/api/SendMail/personalizado";
-
+            string resultado = string.Empty;
             try
             {
-                HttpResponseMessage response;
-                response = await client.PostAsJsonAsync(uri, oBESendMail);
-                return response.IsSuccessStatusCode;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return false;
-            }
+                string Cuerpo = string.Empty;
+                System.Net.Mail.AlternateView texto;
+                System.Net.Mail.MailAddress oMailAddress1;
+                System.Net.Mail.LinkedResource oLk;
+                System.Net.Mail.LinkedResource oLk1;
 
+
+                //Correos Destino
+                List<string> Destino = new List<string>();
+                Destino = ListaCorreo(x_Correo);
+                foreach (string item in Destino)
+                {
+                    try
+                    {
+                        oMailAddress1 = new System.Net.Mail.MailAddress(item);
+                        oMail.To.Add(oMailAddress1);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+
+                //Correos CC
+                List<string> DestinatariosCC = new List<string>();
+                DestinatariosCC = ListaCorreo(x_CorreoCC);
+                foreach (string item in DestinatariosCC)
+                {
+                    try
+                    {
+                        oMailAddress1 = new System.Net.Mail.MailAddress(item);
+                        oMail.CC.Add(oMailAddress1);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+
+                //Correo Ocultos
+                List<string> DestinatariosOcultos = new List<string>();
+                DestinatariosOcultos = ListaCorreo(x_CorreoCO);
+                foreach (string item in DestinatariosOcultos)
+                {
+                    try
+                    {
+                        oMailAddress1 = new System.Net.Mail.MailAddress(item);
+                        oMail.Bcc.Add(oMailAddress1);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+
+
+
+                string cMensaje =
+                    " <div style='border-bottom:1px solid #706e77;padding-bottom:5px;'><img src='cid:logo' style='width: 175px;' /></div>" +
+                    "                                    <div style='padding-top:5px;font-family:Calibri, Arial,  sans-serif'>" +
+                    "                                        <p>" +
+                    "                                            Estimado(a): <stronger>" + Nombre + "<stronger> <br />" +
+                                                                 x_Mensaje +
+                    "                                        </p>" +
+                    "                                        <br />" +
+                    "                                        <br />" +
+                    "                                        <div style='font-size:12px;font-weight:bold; font-style:italic;'>" +
+                    "                                            Atentamente," +
+                    "                                            <br />" +
+                    "                                            System Security" +
+                    "                                        </div>" +
+                    "                                    </div>" +
+
+                    "                    <table border='0' cellpadding='0' cellspacing='0' width='100%' style='color:#707070;font-family:Helvetica,Arial,sans-serif;font-size:8px;line-height:100%;padding-top:10px;margin-top:10px'>" +
+                    "                        <tbody>" +
+                    "                            <tr>" +
+                    "                                <td align='center' valign='top'><span style='font-family:Arial,Helvetica,sans-serif;font-size:9px'> © </span> SOL Technologies " + DateTime.Now.Year + " <br></td>" +
+                    "                            </tr>" +
+                    "                             <tr>" +
+                    "                                 <td align='center' valign='top' style='padding-top:5px'>" +
+                    "                                     <img style='width:20px' title='SOL Technologies SAC' alt='SOL Technologies' src='cid:logo2'>" +
+                    "                                 </td>" +
+                    "                             </tr> " +
+                    "                        </tbody>" +
+                    "                    </table>";
+
+                texto = AlternateView.CreateAlternateViewFromString(cMensaje, Encoding.UTF8, "text/html");
+
+
+                oMail.AlternateViews.Add(texto);
+                oMail.IsBodyHtml = true;
+                oMail.Subject = x_Titulo;
+
+                oMail.From = new System.Net.Mail.MailAddress("gustavo.fernandez@softgaperu.com", "Ochmon SAC");
+                oSMTP.Host = "smtp.hostinger.com";
+                oSMTP.Port = 465;
+                oSMTP.Credentials = new System.Net.NetworkCredential("gustavo.fernandez@softgaperu.com", "Noseaschismoso.1");
+                //oSMTP.EnableSsl = true; No funciona para SMARTERASP.NET
+                oSMTP.Send(oMail);
+
+                resultado = "1";
+            }
+            catch (Exception ex)
+            {
+                Error = ex.Message;
+                resultado = "0";
+            }
+            finally
+            {
+                oMail = null;
+                oSMTP = null;
+            }
+            return resultado;
+        }
+
+
+        public static List<string> ListaCorreo(string x_Correos)
+        {
+            List<string> oListaCorreos = new List<string>();
+            try
+            {
+                string[] oCorreos = x_Correos.Split(',');
+                for (int i = 0; i < oCorreos.Length; i++)
+                {
+                    if (!string.IsNullOrEmpty(oCorreos[i]))
+                        oListaCorreos.Add(oCorreos[i]);
+                }
+            }
+            catch (Exception)
+            {
+                oListaCorreos = new List<string>();
+            }
+            return oListaCorreos;
         }
     }
 }

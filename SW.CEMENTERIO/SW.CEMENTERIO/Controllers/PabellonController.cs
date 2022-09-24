@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
 using SW.CEMENTERIO.BusinessLogicLayer;
 using SW.CEMENTERIO.EntityLayer;
 using SW.CEMENTERIO.Models;
@@ -6,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace SW.CEMENTERIO.Controllers
 {
@@ -103,6 +106,72 @@ namespace SW.CEMENTERIO.Controllers
                 oResponse.Titulo = "Éxito";
                 oResponse.Mensaje = "Pabellón eliminado correctamente";
                 oResponse.Tipo = 1;
+                return Json(oResponse); ;
+            }
+            catch (Exception e)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = e.Message;
+                return Json(oResponse);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult CargaMasiva(IFormFile file)
+        {
+            ResponseViewModel oResponse = new();
+            try
+            {
+                var _File = file;
+                if (_File == null)
+                    throw new Exception("El archivo excel es requerido");
+
+                List<ENT_TA_NICHO> lstNichos = new List<ENT_TA_NICHO>();
+                using (var package = new ExcelPackage(_File.OpenReadStream()))
+                {
+                    using var Sheet = package.Workbook.Worksheets[0];
+                    for (int IndiceFila = 2; IndiceFila <= Sheet.Dimension.End.Row; IndiceFila++)
+                    {
+                        ENT_TA_NICHO objNicho = new ENT_TA_NICHO();
+                        objNicho.PABS_NOMBRE = Sheet.Cells[IndiceFila, 1].Value != null ? Sheet.Cells[IndiceFila, 1].Value.ToString() : throw new Exception("El campo " + IndiceFila + ", 1 tiene un formato incorrecto");
+                        objNicho.PABS_TIPO = Sheet.Cells[IndiceFila, 2].Value != null ? Convert.ToInt32(Sheet.Cells[IndiceFila, 2].Value) : throw new Exception("El campo " + IndiceFila + ", 2 tiene un formato incorrecto");
+                        objNicho.NICS_CODNICHO = Sheet.Cells[IndiceFila, 3].Value != null ? Sheet.Cells[IndiceFila, 3].Value.ToString() : throw new Exception("El campo " + IndiceFila + ", 3 tiene un formato incorrecto");
+                        objNicho.NICB_NUMDIF = Sheet.Cells[IndiceFila, 4].Value != null ? Convert.ToInt32(Sheet.Cells[IndiceFila, 4].Value) : throw new Exception("El campo " + IndiceFila + ", 4 tiene un formato incorrecto");
+                        lstNichos.Add(objNicho);
+                    }
+                }
+
+                //INICIAMOS LA CARGA MASIVA
+                using TransactionScope scope = new TransactionScope();
+
+                var TMP_lstPabellon = new List<ENT_TA_NICHO>();
+                var TMP_lstNichos = new List<ENT_TA_NICHO>();
+
+                TMP_lstPabellon = lstNichos.GroupBy(x => x.PABS_NOMBRE).Select(x => x.FirstOrDefault()).ToList();
+                //INSERTAMOS LOS PABELLONES
+                foreach (var item in TMP_lstPabellon)
+                {
+                    item.PABN_IDCEMENTERIO = 1;
+                    item.PABS_UBICACION = "";
+                    item.PABS_USUREGISTRO = "ADMIN";
+                    BLL_TA_PABELLON bllPabellon = new BLL_TA_PABELLON();
+                    bllPabellon.Insert(item);
+                }
+
+                foreach (var item in lstNichos)
+                {
+                    item.NICS_USUREGISTRO = "ADMIN";
+                    BLL_TA_NICHO bllNicho = new BLL_TA_NICHO();
+                    item.NICN_IDPABELLON = TMP_lstPabellon.Find(x => x.PABS_NOMBRE == item.PABS_NOMBRE).PABN_IDPABELLON;
+                    bllNicho.Insert(item);
+                }
+                oResponse.Estado = true;
+                oResponse.Titulo = "Éxito";
+                oResponse.Mensaje = "Archivo cargado correctamente";
+                oResponse.Tipo = 1;
+                scope.Complete();
                 return Json(oResponse); ;
             }
             catch (Exception e)

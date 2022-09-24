@@ -302,3 +302,27 @@ function eliminarNicho(id) {
         }
     });
 }
+
+function CargaMasivaPabellon() {
+    var _archivo = $("#pabellonFile").get(0).files[0];
+    var formData = new FormData();
+    formData.append("file", _archivo);
+    $.ajax({
+        url: "Pabellon/CargaMasiva",
+        type: "POST",
+        datatype: "json",
+        contentType: false,
+        processData: false,
+        data: formData,
+        success: function (data) {
+            if (data.estado) {
+                buscar();
+            }
+            mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
+        },
+        error: function (error) {
+            mostrarMensaje("Error", "Codigo: " + error.status + " - " + error.responseText, 2, true);
+        }
+    });
+    $("#modalCargaMasiva").modal("hide");
+}

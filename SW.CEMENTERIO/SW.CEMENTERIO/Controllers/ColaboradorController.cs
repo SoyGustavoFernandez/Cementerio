@@ -74,7 +74,7 @@ namespace SW.CEMENTERIO.Controllers
 
                     objColaborador.LOGN_IDCOLABORADOR = objColaborador.COLN_IDCOLABORADOR;
                     objColaborador.LOGS_USUARIO = objColaborador.COLS_CORREO;
-                    objColaborador.LOGS_CLAVE = Utilitarios.EncryptTripleDES(Utilitarios.NumeroAletorio(), ConfigurationManager.AppSettings["SendMailKey"]);
+                    objColaborador.LOGS_CLAVE = Utilitarios.EncriptarPassword(Utilitarios.NumeroAletorio());
                     objColaborador.LOGS_USUREGISTRO = "ADMIN";
                     loginLN.Insert(objColaborador);
                 }
@@ -127,7 +127,7 @@ namespace SW.CEMENTERIO.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> RecuperaClave(int idColaborador)
+        public JsonResult RecuperaClave(int idColaborador)
         {
             ResponseViewModel oResponse = new();
             try
@@ -140,9 +140,10 @@ namespace SW.CEMENTERIO.Controllers
                 var asunto = string.Empty;
 
                 if (!string.IsNullOrEmpty(modelo.COLS_CORREO))
-                    oResponse.Estado = await SendMail.EnviarCorreoContrato(modelo.COLS_CORREO, "", "", 8, parameters, asunto);
+                    SendMail.EnviarCorreo(modelo.COLS_CORREO, "", "", "Jesus", "Prueba", "mensaje prueba");
+                //oResponse.Estado = SendMail.EnviarCorreo(modelo.COLS_CORREO);
 
-                if (!oResponse.Estado) throw new Exception();
+                if (!oResponse.Estado) throw new Exception("No se pudo enviar el correo electrónico");
 
                 oResponse.Titulo = "Éxito";
                 oResponse.Mensaje = "Correo enviado correctamente";
