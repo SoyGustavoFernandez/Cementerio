@@ -77,6 +77,8 @@ namespace SW.CEMENTERIO.Controllers
                     objColaborador.LOGS_CLAVE = Utilitarios.EncriptarPassword(Utilitarios.NumeroAletorio());
                     objColaborador.LOGS_USUREGISTRO = "ADMIN";
                     loginLN.Insert(objColaborador);
+
+                    EnvioClave(objColaborador.COLN_IDCOLABORADOR, "Bienvenido al Sistema");
                 }
                 else
                 {
@@ -127,7 +129,7 @@ namespace SW.CEMENTERIO.Controllers
         }
 
         [HttpPost]
-        public JsonResult RecuperaClave(int idColaborador)
+        public JsonResult EnvioClave(int idColaborador, string asunto = "Recuperación de Contraseña")
         {
             ResponseViewModel oResponse = new();
             try
@@ -136,12 +138,15 @@ namespace SW.CEMENTERIO.Controllers
                 BLL_TA_LOGIN bllLogin = new BLL_TA_LOGIN();
                 modelo = bllLogin.SelectAllByLOGN_IDCOLABORADOR(idColaborador).FirstOrDefault();
 
-                var parameters = new Dictionary<string, string> { { "Colaborador", "Gustavo" } };
-                var asunto = string.Empty;
+                var parameters = new Dictionary<string, string> { 
+                    { "Correo", modelo.COLS_CORREO },
+                    { "Colaborador", modelo.COLS_NOMBRES + " " + modelo.COLS_APEPATERNO + " " + modelo.COLS_APEMATERNO },
+                    { "Clave", Utilitarios.DesencriptarPassword(modelo.LOGS_CLAVE) },
+                    { "Asunto", asunto }
+                };
 
                 if (!string.IsNullOrEmpty(modelo.COLS_CORREO))
-                    SendMail.EnviarCorreo(modelo.COLS_CORREO, "", "", "Jesus", "Prueba", "mensaje prueba");
-                //oResponse.Estado = SendMail.EnviarCorreo(modelo.COLS_CORREO);
+                    oResponse.Estado = SendMail.EnviarCorreo(parameters);
 
                 if (!oResponse.Estado) throw new Exception("No se pudo enviar el correo electrónico");
 

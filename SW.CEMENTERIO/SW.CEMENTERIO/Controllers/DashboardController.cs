@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SW.CEMENTERIO.BLL;
+using SW.CEMENTERIO.ENT;
+using SW.CEMENTERIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +15,63 @@ namespace SW.CEMENTERIO.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public JsonResult BuscarDifuntos()
+        {
+            ResponseViewModel oResponse = new();
+            try
+            {
+                List<TotalDifuntos> modelo = new List<TotalDifuntos>();
+                BLL_Dashboard dashboardLN = new BLL_Dashboard();
+                modelo = dashboardLN.BuscarDifuntos();
+                if (modelo.Count > 0)
+                {
+                    oResponse.Estado = true;
+                    oResponse.Tipo = 1;
+                    oResponse.Mensaje = "Lista Obtenida";
+                    oResponse.AdicionalInt = modelo.Sum(x => x.CANTIDAD_DIFUNTOS);
+                    int[] cantidades = new int[modelo.Count];
+                    string[] nombres = new string[modelo.Count];
+
+                    for (int i = 0; i < modelo.Count; i++)
+                    {
+                        cantidades[i] = modelo[i].CANTIDAD_DIFUNTOS;
+                        nombres[i] = modelo[i].PABELLON;
+                    }
+                
+                    oResponse.Datos = modelo;
+                    //return Json(oResponse);
+
+                    return Json(new
+                    {
+                        resultado =
+                           new
+                           {
+                               data = cantidades,
+                               labels = nombres
+                           },
+                        Response = oResponse
+                    });
+                }
+                else
+                {
+                    oResponse.Tipo = 0;
+                    oResponse.Estado = false;
+                    oResponse.Mensaje = "No se encontraron datos";
+                    oResponse.Datos = modelo;
+                    return Json(oResponse);
+                }
+            }
+            catch (Exception e)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = e.Message;
+                return Json(oResponse);
+            }
+        }
+
     }
 }

@@ -143,7 +143,7 @@ function verColaborador(id) {
 function reenviarCorreo(id) {
     $.ajax({
         type: "POST",
-        url: "Colaborador/RecuperaClave",
+        url: "Colaborador/EnvioClave",
         data: { idColaborador: id },
         dataType: 'json',
         success: function (data) {

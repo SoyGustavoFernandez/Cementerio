@@ -487,6 +487,7 @@ D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\SW.CEMENTERIO\SW.CEMENTERIO\obj\Debug\ne
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\SW.CEMENTERIO\SW.CEMENTERIO\obj\Debug\net5.0\SW.CEMENTERIO.pdb
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\SW.CEMENTERIO\SW.CEMENTERIO\obj\Debug\net5.0\SW.CEMENTERIO.genruntimeconfig.cache
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\SW.CEMENTERIO\SW.CEMENTERIO\obj\Debug\net5.0\Razor\Views\Difunto\Index.cshtml.g.cs
+D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\bin\Debug\net5.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\bin\Debug\net5.0\web.config
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\bin\Debug\net5.0\appsettings.Development.json
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\bin\Debug\net5.0\appsettings.json
@@ -856,7 +857,6 @@ D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTER
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\bin\Debug\net5.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\bin\Debug\net5.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\bin\Debug\net5.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\bin\Debug\net5.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\bin\Debug\net5.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\bin\Debug\net5.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\bin\Debug\net5.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll

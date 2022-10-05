@@ -11,7 +11,8 @@ namespace Microsoft.ApplicationBlocks.Data
 {
     public class DAL_Execute
     {
-        protected string strConexion = "Data Source=localhost;Initial Catalog=BD_CEMENTERIO;User Id=sa;Password=alumno";//ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString;
+        //protected string strConexion = "Data Source=localhost;Initial Catalog=BD_CEMENTERIO;User Id=sa;Password=alumno";//ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString;
+        protected string strConexion = "Data Source = SQL5063.site4now.net; Initial Catalog = db_a74b52_cementerio; User Id = db_a74b52_cementerio_admin; Password=C3m3nt3r10";
         protected bool Ejecutado = false;
         protected string Error = string.Empty;
 
