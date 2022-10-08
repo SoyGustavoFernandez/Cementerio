@@ -18,7 +18,7 @@ namespace SW.CEMENTERIO.DataAccessLayer
 		public void Insert(ENT_TA_LOGIN x_oENT_TA_LOGIN)
 		{
 			SqlParameter[] parameters = null;
-			try{
+			try {
 				parameters = new SqlParameter[]
 				{
 					new SqlParameter("@LOGN_IDCOLABORADOR", x_oENT_TA_LOGIN.LOGN_IDCOLABORADOR),
@@ -32,7 +32,7 @@ namespace SW.CEMENTERIO.DataAccessLayer
 				throw controlarExcepcion("Error de asignación de parámetros.", ex);
 			}
 
-			try{
+			try {
 				x_oENT_TA_LOGIN.LOGN_IDLOGIN = (int)ejecutarScalar("TA_LOGIN_Insert", parameters);
 			}
 			catch (Exception ex)
@@ -48,7 +48,7 @@ namespace SW.CEMENTERIO.DataAccessLayer
 		{
 
 			SqlParameter[] parameters = null;
-			try{
+			try {
 				parameters = new SqlParameter[]
 				{
 					new SqlParameter("@LOGN_IDLOGIN", x_oENT_TA_LOGIN.LOGN_IDLOGIN),
@@ -64,13 +64,44 @@ namespace SW.CEMENTERIO.DataAccessLayer
 				throw controlarExcepcion("Error de asignación de parámetros.", ex);
 			}
 
-			try{
+			try {
 				ejecutarNonQuery("TA_LOGIN_Update", parameters);
 			}
 			catch (Exception ex)
 			{
 				throw controlarExcepcion("Error de operación de acceso a datos.", ex);
 			}
+		}
+
+		/// <summary>
+		/// Permite autenticar el inicio de sesión para un usuario
+		/// </summary>
+		public ENT_TA_LOGIN AutenticarLogin(string LOGS_USUARIO, string LOGS_CLAVE)
+		{
+			SqlParameter[] parameters = null;
+			try
+			{
+				parameters = new SqlParameter[]
+				{
+					new SqlParameter("@USU_USUARIO", LOGS_USUARIO),
+					new SqlParameter("@USU_CLAVE", LOGS_CLAVE)
+				};
+			}
+			catch (Exception ex)
+			{
+				throw controlarExcepcion("Error de asignación de parámetros.", ex);
+			}
+
+			ENT_TA_LOGIN objTA_LOGIN = new ENT_TA_LOGIN();
+			try
+			{
+				objTA_LOGIN = GetEntity<ENT_TA_LOGIN>("TA_AutenticarLogin", parameters);
+			}
+			catch (Exception ex)
+			{
+				throw controlarExcepcion("Error de operación de acceso a datos.", ex);
+			}
+			return objTA_LOGIN;
 		}
 
 		/// <summary>
@@ -200,7 +231,36 @@ namespace SW.CEMENTERIO.DataAccessLayer
 			return x_oENT_TA_LOGINList;
 		}
 
+		/// <summary>
+		/// Selecciona una registro de la tabla TA_LOGIN por un foreign key.
+		/// </summary>
+		public ENT_TA_LOGIN SelectAllByCOLS_CORREO(string COLS_CORREO)
+		{
+			SqlParameter[] parameters = null;
+			try
+			{
+				parameters = new SqlParameter[]
+				{
+					new SqlParameter("@COLS_CORREO", COLS_CORREO)
+				};
+			}
+			catch (Exception ex)
+			{
+				throw controlarExcepcion("Error de asignación de parámetros.", ex);
+			}
 
+			ENT_TA_LOGIN objTA_LOGIN = new ENT_TA_LOGIN();
+			try
+			{
+				objTA_LOGIN = GetEntity<ENT_TA_LOGIN>("TA_LOGIN_SelectByCOLS_CORREO", parameters);
+			}
+			catch (Exception ex)
+			{
+				throw controlarExcepcion("Error de operación de acceso a datos.", ex);
+			}
+			return objTA_LOGIN;
+		}
+		
 		#endregion
 	}
 }

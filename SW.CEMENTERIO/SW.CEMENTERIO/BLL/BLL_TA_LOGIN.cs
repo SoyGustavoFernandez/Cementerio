@@ -66,7 +66,22 @@ namespace SW.CEMENTERIO.BusinessLogicLayer
 			return new DAL_TA_LOGIN().SelectAllByLOGN_IDCOLABORADOR(LOGN_IDCOLABORADOR);
 		}
 
+		/// <summary>
+		/// Permite autenticar el inicio de sesión para un usuario.
+		/// </summary>
+		public ENT_TA_LOGIN AutenticarLogin(string LOGS_USUARIO, string LOGS_CLAVE)
+		{
+			return new DAL_TA_LOGIN().AutenticarLogin(LOGS_USUARIO, LOGS_CLAVE);
+		}
 
+
+		/// <summary>
+		/// Selecciona los registros de la tabla TA_LOGIN por un foreign key.
+		/// </summary>
+		public ENT_TA_LOGIN SelectAllByCOLS_CORREO(string COLS_CORREO)
+		{
+			return new DAL_TA_LOGIN().SelectAllByCOLS_CORREO(COLS_CORREO);
+		}
 		#endregion
 	}
 }

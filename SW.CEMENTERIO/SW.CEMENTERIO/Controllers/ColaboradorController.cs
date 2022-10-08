@@ -78,7 +78,7 @@ namespace SW.CEMENTERIO.Controllers
                     objColaborador.LOGS_USUREGISTRO = "ADMIN";
                     loginLN.Insert(objColaborador);
 
-                    EnvioClave(objColaborador.COLN_IDCOLABORADOR, "Bienvenido al Sistema");
+                    EnvioClave(objColaborador.COLN_IDCOLABORADOR.ToString(), "Te damos la bienvenida al Sistema");
                 }
                 else
                 {
@@ -129,16 +129,19 @@ namespace SW.CEMENTERIO.Controllers
         }
 
         [HttpPost]
-        public JsonResult EnvioClave(int idColaborador, string asunto = "Recuperación de Contraseña")
+        public JsonResult EnvioClave(string idColaborador, string asunto = "Recuperación de Contraseña", bool isReset = false)
         {
             ResponseViewModel oResponse = new();
             try
             {
                 ENT_TA_LOGIN modelo = new ENT_TA_LOGIN();
                 BLL_TA_LOGIN bllLogin = new BLL_TA_LOGIN();
-                modelo = bllLogin.SelectAllByLOGN_IDCOLABORADOR(idColaborador).FirstOrDefault();
-
-                var parameters = new Dictionary<string, string> { 
+                if (isReset)
+                    modelo = bllLogin.SelectAllByCOLS_CORREO(idColaborador);
+                else
+                    modelo = bllLogin.SelectAllByLOGN_IDCOLABORADOR(Convert.ToInt32(idColaborador)).FirstOrDefault();
+            
+                    var parameters = new Dictionary<string, string> { 
                     { "Correo", modelo.COLS_CORREO },
                     { "Colaborador", modelo.COLS_NOMBRES + " " + modelo.COLS_APEPATERNO + " " + modelo.COLS_APEMATERNO },
                     { "Clave", Utilitarios.DesencriptarPassword(modelo.LOGS_CLAVE) },
@@ -146,7 +149,7 @@ namespace SW.CEMENTERIO.Controllers
                 };
 
                 if (!string.IsNullOrEmpty(modelo.COLS_CORREO))
-                    oResponse.Estado = SendMail.EnviarCorreo(parameters);
+                    oResponse.Estado = SendMail.EnviarCorreo(parameters, isReset);
 
                 if (!oResponse.Estado) throw new Exception("No se pudo enviar el correo electrónico");
 
