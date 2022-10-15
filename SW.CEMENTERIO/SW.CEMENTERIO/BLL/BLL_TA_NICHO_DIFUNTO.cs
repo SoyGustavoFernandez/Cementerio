@@ -69,7 +69,7 @@ namespace SW.CEMENTERIO.BusinessLogicLayer
 		/// <summary>
 		/// Selecciona los registros de la tabla TA_NICHO_DIFUNTO por un foreign key.
 		/// </summary>
-		public List<ENT_TA_NICHO_DIFUNTO> SelectAllByNICDIFN_IDDIFUNTO(int NICDIFN_IDDIFUNTO)
+		public ENT_TA_NICHO_DIFUNTO SelectAllByNICDIFN_IDDIFUNTO(int NICDIFN_IDDIFUNTO)
 		{
 			return new DAL_TA_NICHO_DIFUNTO().SelectAllByNICDIFN_IDDIFUNTO(NICDIFN_IDDIFUNTO);
 		}

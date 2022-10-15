@@ -103,6 +103,7 @@ namespace SW.CEMENTERIO.Controllers
             ResponseViewModel oResponse = new();
             try
             {
+                TransactionScope scope = new TransactionScope();
                 BLL_TA_NICHO nichoLN = new BLL_TA_NICHO();
                 if (objNicho.NICN_IDNICHO == 0)
                 {
@@ -123,6 +124,8 @@ namespace SW.CEMENTERIO.Controllers
                 oResponse.AdicionalInt = objNicho.NICN_IDNICHO;
                 oResponse.Mensaje = "Nicho " + (objNicho.NICN_IDNICHO == 0 ? "registrado" : "actualizado") + " correctamente";
                 oResponse.Tipo = 1;
+                scope.Complete();
+                scope.Dispose();
                 return Json(oResponse); ;
             }
             catch (Exception e)
@@ -141,12 +144,32 @@ namespace SW.CEMENTERIO.Controllers
             ResponseViewModel oResponse = new();
             try
             {
+                TransactionScope scope = new TransactionScope();
+
+                List<ENT_TA_NICHO_DIFUNTO> lstNichos = new List<ENT_TA_NICHO_DIFUNTO> ();
+                BLL_TA_NICHO_DIFUNTO ln_TA_NICHO_DIFUNTO = new BLL_TA_NICHO_DIFUNTO();
+                lstNichos = ln_TA_NICHO_DIFUNTO.SelectAllByNICDIFN_IDNICHO(idNicho);
+
+                if (lstNichos.Count > 0)
+                {
+                    lstNichos = lstNichos.FindAll(x => x.NICB_NUMDIFTOTAL - x.NICB_NUMDIFACTUAL == 0);
+                    if (lstNichos.Count == 0)
+                        throw new Exception("No se puede eliminar el nicho actual, hay difuntos registrados actualmente");
+
+                    ENT_TA_NICHO objNicho = new ENT_TA_NICHO();
+                    BLL_TA_NICHO nichoLN = new BLL_TA_NICHO();
+                    objNicho = nichoLN.Select(idNicho);
+                    objNicho = nichoLN.UpdateSpace(objNicho.NICN_IDNICHO, 1);
+                }
+
                 BLL_TA_NICHO NichoLN = new BLL_TA_NICHO();
                 NichoLN.Delete(idNicho);
                 oResponse.Estado = true;
                 oResponse.Titulo = "Éxito";
                 oResponse.Mensaje = "Nicho eliminado correctamente";
                 oResponse.Tipo = 1;
+                scope.Complete();
+                scope.Dispose();
                 return Json(oResponse); ;
             }
             catch (Exception e)

@@ -103,12 +103,26 @@ namespace SW.CEMENTERIO.Controllers
             ResponseViewModel oResponse = new();
             try
             {
+                TransactionScope scope = new TransactionScope();
+                List<ENT_TA_NICHO> lstNichos = new List<ENT_TA_NICHO>();
+                BLL_TA_NICHO NichoLN = new BLL_TA_NICHO();
+                lstNichos = NichoLN.SelectAllByNICN_IDPABELLON(idPabellon);
+
+                if (lstNichos.Count > 0)
+                {
+                    lstNichos = lstNichos.FindAll(x => x.NICB_NUMDIFTOTAL - x.NICB_NUMDIFACTUAL > 0);
+                    if (lstNichos.Count > 0)
+                        throw new Exception("No se puede eliminar el pabellón actual, hay difuntos registrados actualmente");
+                }
+
                 BLL_TA_PABELLON pabellonLN = new BLL_TA_PABELLON();
                 pabellonLN.Delete(idPabellon);
                 oResponse.Estado = true;
                 oResponse.Titulo = "Éxito";
                 oResponse.Mensaje = "Pabellón eliminado correctamente";
                 oResponse.Tipo = 1;
+                scope.Complete();
+                scope.Dispose();
                 return Json(oResponse); ;
             }
             catch (Exception e)
@@ -137,12 +151,14 @@ namespace SW.CEMENTERIO.Controllers
                     using var Sheet = package.Workbook.Worksheets[0];
                     for (int IndiceFila = 2; IndiceFila <= Sheet.Dimension.End.Row; IndiceFila++)
                     {
-                        ENT_TA_NICHO objNicho = new ENT_TA_NICHO();
-                        objNicho.PABS_NOMBRE = Sheet.Cells[IndiceFila, 1].Value != null ? Sheet.Cells[IndiceFila, 1].Value.ToString() : throw new Exception("El campo " + IndiceFila + ", 1 tiene un formato incorrecto");
-                        objNicho.PABS_TIPO = Sheet.Cells[IndiceFila, 2].Value != null ? Convert.ToInt32(Sheet.Cells[IndiceFila, 2].Value) : throw new Exception("El campo " + IndiceFila + ", 2 tiene un formato incorrecto");
-                        objNicho.NICS_CODNICHO = Sheet.Cells[IndiceFila, 3].Value != null ? Sheet.Cells[IndiceFila, 3].Value.ToString() : throw new Exception("El campo " + IndiceFila + ", 3 tiene un formato incorrecto");
-                        objNicho.NICB_NUMDIFTOTAL = Sheet.Cells[IndiceFila, 4].Value != null ? Convert.ToInt32(Sheet.Cells[IndiceFila, 4].Value) : throw new Exception("El campo " + IndiceFila + ", 4 tiene un formato incorrecto");
-                        objNicho.NICB_NUMDIFACTUAL = Sheet.Cells[IndiceFila, 4].Value != null ? Convert.ToInt32(Sheet.Cells[IndiceFila, 4].Value) : throw new Exception("El campo " + IndiceFila + ", 4 tiene un formato incorrecto");
+                        ENT_TA_NICHO objNicho = new ENT_TA_NICHO
+                        {
+                            PABS_NOMBRE = Sheet.Cells[IndiceFila, 1].Value != null ? Sheet.Cells[IndiceFila, 1].Value.ToString() : throw new Exception("El campo " + IndiceFila + ", 1 tiene un formato incorrecto"),
+                            PABS_TIPO = Sheet.Cells[IndiceFila, 2].Value != null ? Convert.ToInt32(Sheet.Cells[IndiceFila, 2].Value) : throw new Exception("El campo " + IndiceFila + ", 2 tiene un formato incorrecto"),
+                            NICS_CODNICHO = Sheet.Cells[IndiceFila, 3].Value != null ? Sheet.Cells[IndiceFila, 3].Value.ToString() : throw new Exception("El campo " + IndiceFila + ", 3 tiene un formato incorrecto"),
+                            NICB_NUMDIFTOTAL = Sheet.Cells[IndiceFila, 4].Value != null ? Convert.ToInt32(Sheet.Cells[IndiceFila, 4].Value) : throw new Exception("El campo " + IndiceFila + ", 4 tiene un formato incorrecto"),
+                            NICB_NUMDIFACTUAL = Sheet.Cells[IndiceFila, 4].Value != null ? Convert.ToInt32(Sheet.Cells[IndiceFila, 4].Value) : throw new Exception("El campo " + IndiceFila + ", 4 tiene un formato incorrecto")
+                        };
                         lstNichos.Add(objNicho);
                     }
                 }
@@ -175,7 +191,8 @@ namespace SW.CEMENTERIO.Controllers
                 oResponse.Titulo = "Éxito";
                 oResponse.Mensaje = "Archivo cargado correctamente";
                 oResponse.Tipo = 1;
-                scope.Complete();
+                scope.Complete(); 
+                scope.Dispose();
                 return Json(oResponse); ;
             }
             catch (Exception e)

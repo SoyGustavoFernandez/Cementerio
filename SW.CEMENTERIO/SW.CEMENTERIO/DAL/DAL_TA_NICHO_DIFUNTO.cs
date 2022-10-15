@@ -90,7 +90,8 @@ namespace SW.CEMENTERIO.DataAccessLayer
 			}
 
 			try{
-				ejecutarNonQuery("TA_NICHO_DIFUNTO_Delete", parameters);
+				ejecutarScalar("TA_NICHO_DIFUNTO_Delete", parameters);
+				//ejecutarNonQuery("TA_NICHO_DIFUNTO_Delete", parameters);
 			}
 			catch (Exception ex)
 			{
@@ -199,7 +200,7 @@ namespace SW.CEMENTERIO.DataAccessLayer
 		/// <summary>
 		/// Selecciona los registros de la tabla TA_NICHO_DIFUNTO por un foreign key.
 		/// </summary>
-		public List<ENT_TA_NICHO_DIFUNTO> SelectAllByNICDIFN_IDDIFUNTO(int NICDIFN_IDDIFUNTO)
+		public ENT_TA_NICHO_DIFUNTO SelectAllByNICDIFN_IDDIFUNTO(int NICDIFN_IDDIFUNTO)
 		{
 			SqlParameter[] parameters = null;
 			try{
@@ -213,10 +214,10 @@ namespace SW.CEMENTERIO.DataAccessLayer
 				throw controlarExcepcion("Error de asignación de parámetros.", ex);
 			}
 
-			List<ENT_TA_NICHO_DIFUNTO> x_oENT_TA_NICHO_DIFUNTOList = new List<ENT_TA_NICHO_DIFUNTO>();
+			ENT_TA_NICHO_DIFUNTO x_oENT_TA_NICHO_DIFUNTOList = new ENT_TA_NICHO_DIFUNTO();
 
 			try{
-					x_oENT_TA_NICHO_DIFUNTOList = GetList<ENT_TA_NICHO_DIFUNTO>("TA_NICHO_DIFUNTOSelectAllByNICDIFN_IDDIFUNTO", parameters);
+				x_oENT_TA_NICHO_DIFUNTOList = GetEntity<ENT_TA_NICHO_DIFUNTO>("TA_NICHO_DIFUNTOSelectAllByNICDIFN_IDDIFUNTO", parameters);
 			}
 			catch (Exception ex)
 			{
@@ -245,7 +246,7 @@ namespace SW.CEMENTERIO.DataAccessLayer
 			List<ENT_TA_NICHO_DIFUNTO> x_oENT_TA_NICHO_DIFUNTOList = new List<ENT_TA_NICHO_DIFUNTO>();
 
 			try{
-					x_oENT_TA_NICHO_DIFUNTOList = GetList<ENT_TA_NICHO_DIFUNTO>("TA_NICHO_DIFUNTOSelectAllByNICDIFN_IDNICHO", parameters);
+				x_oENT_TA_NICHO_DIFUNTOList = GetList<ENT_TA_NICHO_DIFUNTO>("TA_NICHO_DIFUNTOSelectAllByNICDIFN_IDNICHO", parameters);
 			}
 			catch (Exception ex)
 			{

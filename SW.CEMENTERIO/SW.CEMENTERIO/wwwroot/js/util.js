@@ -850,6 +850,7 @@ function cargarNicho(_idPabellon) {
         url: "Nicho/BuscarPorPabellon",
         data: { idPabellon: _idPabellon, valCantidad: true },
         dataType: 'json',
+        async: false,
         success: function (data) {
             if (data.estado) {
                 $("#selectNicho").empty();

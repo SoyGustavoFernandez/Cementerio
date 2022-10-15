@@ -96,6 +96,7 @@ namespace SW.CEMENTERIO.Controllers
                 oResponse.Mensaje = "Colaborador " + (objColaborador.COLN_IDCOLABORADOR == 0 ? "registrado" : "actualizado") + " correctamente";
                 oResponse.Tipo = 1;
                 scope.Complete();
+                scope.Dispose();
                 return Json(oResponse); ;
             }
             catch (Exception e)

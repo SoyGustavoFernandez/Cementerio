@@ -140,6 +140,7 @@ function verDifunto(id) {
             type: "POST",
             url: "Difunto/Buscar",
             data: { idDifunto: id },
+            async: false,
             dataType: 'json',
             success: function (data) {
                 if (data.estado) {
@@ -150,6 +151,7 @@ function verDifunto(id) {
                     $("#nombreDifunto").val(data.datos[0].difS_NOMBRES);
                     $("#fecDefuncion").val(moment(data.datos[0].difD_FECHADEFUNCION).format('DD/MM/YYYY'));
                     $("#selectPabellon").val(data.datos[0].pabN_IDPABELLON);
+                    cargarNicho(data.datos[0].pabN_IDPABELLON);
                     $("#selectNicho").val(data.datos[0].nicN_IDNICHO);
                     $("#lblModalDifunto").html(data.datos[0].difS_NOMBRES);
                 } else {

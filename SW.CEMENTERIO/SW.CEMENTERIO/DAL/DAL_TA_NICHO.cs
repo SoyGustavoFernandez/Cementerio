@@ -77,14 +77,15 @@ namespace SW.CEMENTERIO.DataAccessLayer
 		/// <summary>
 		/// Actualiza la cantidad de espacios libres en un NICHO.
 		/// </summary>
-		public ENT_TA_NICHO UpdateSpace(int NICN_IDNICHO)
+		public ENT_TA_NICHO_DIFUNTO UpdateSpace(int NICN_IDNICHO, int Cantidad)
 		{
 			SqlParameter[] parameters = null;
 			try
 			{
 				parameters = new SqlParameter[]
 				{
-					new SqlParameter("@NICN_IDNICHO", NICN_IDNICHO)
+					new SqlParameter("@NICN_IDNICHO", NICN_IDNICHO),
+					new SqlParameter("@CANTIDAD", Cantidad)
 				};
 			}
 			catch (Exception ex)
@@ -92,7 +93,7 @@ namespace SW.CEMENTERIO.DataAccessLayer
 				throw controlarExcepcion("Error de asignación de parámetros.", ex);
 			}
 
-			ENT_TA_NICHO objTA_NICHO = new ENT_TA_NICHO();
+			ENT_TA_NICHO_DIFUNTO objTA_NICHO = new ENT_TA_NICHO_DIFUNTO();
 			try
 			{
 				objTA_NICHO.NICB_STATUSRESPONSE = (int)ejecutarScalar("TA_NICHO_UpdateSpace", parameters);
@@ -122,7 +123,8 @@ namespace SW.CEMENTERIO.DataAccessLayer
 			}
 
 			try{
-				ejecutarNonQuery("TA_NICHO_Delete", parameters);
+				ejecutarScalar("TA_NICHO_Delete", parameters);
+				//ejecutarNonQuery("TA_NICHO_Delete", parameters);
 			}
 			catch (Exception ex)
 			{

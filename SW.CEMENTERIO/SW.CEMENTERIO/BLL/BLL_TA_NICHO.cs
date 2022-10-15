@@ -30,9 +30,9 @@ namespace SW.CEMENTERIO.BusinessLogicLayer
 		/// <summary>
 		/// Actualiza a registro de la tabla TA_NICHO.
 		/// </summary>
-		public ENT_TA_NICHO UpdateSpace(int NICN_IDNICHO)
+		public ENT_TA_NICHO_DIFUNTO UpdateSpace(int NICN_IDNICHO, int Cantidad)
 		{
-			return new DAL_TA_NICHO().UpdateSpace(NICN_IDNICHO);
+			return new DAL_TA_NICHO().UpdateSpace(NICN_IDNICHO, Cantidad);
 		}
 		
 		/// <summary>

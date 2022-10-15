@@ -93,7 +93,8 @@ namespace SW.CEMENTERIO.DataAccessLayer
 			}
 
 			try{
-				ejecutarNonQuery("TA_PABELLON_Delete", parameters);
+				ejecutarScalar("TA_PABELLON_Delete", parameters);
+				//ejecutarNonQuery("TA_PABELLON_Delete", parameters);
 			}
 			catch (Exception ex)
 			{
