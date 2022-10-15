@@ -22,7 +22,8 @@ namespace SW.CEMENTERIO.DataAccessLayer
 				parameters = new SqlParameter[]
 				{
 					new SqlParameter("@NICS_CODNICHO", x_oENT_TA_NICHO.NICS_CODNICHO),
-					new SqlParameter("@NICB_NUMDIF", x_oENT_TA_NICHO.NICB_NUMDIF),
+					new SqlParameter("@NICB_NUMDIFTOTAL", x_oENT_TA_NICHO.NICB_NUMDIFTOTAL),
+					new SqlParameter("@NICB_NUMDIFACTUAL", x_oENT_TA_NICHO.NICB_NUMDIFACTUAL),
 					new SqlParameter("@NICN_IDPABELLON", x_oENT_TA_NICHO.NICN_IDPABELLON),
 					new SqlParameter("@NICS_USUREGISTRO", x_oENT_TA_NICHO.NICS_USUREGISTRO)
 				};
@@ -53,7 +54,7 @@ namespace SW.CEMENTERIO.DataAccessLayer
 				{
 					new SqlParameter("@NICN_IDNICHO", x_oENT_TA_NICHO.NICN_IDNICHO),
 					new SqlParameter("@NICS_CODNICHO", x_oENT_TA_NICHO.NICS_CODNICHO),
-					new SqlParameter("@NICB_NUMDIF", x_oENT_TA_NICHO.NICB_NUMDIF),
+					new SqlParameter("@NICB_NUMDIFTOTAL", x_oENT_TA_NICHO.NICB_NUMDIFTOTAL),
 					new SqlParameter("@NICN_IDPABELLON", x_oENT_TA_NICHO.NICN_IDPABELLON),
 					new SqlParameter("@NICS_USUMODIFICA", x_oENT_TA_NICHO.NICS_USUMODIFICA)
 				};
@@ -64,12 +65,43 @@ namespace SW.CEMENTERIO.DataAccessLayer
 			}
 
 			try{
-				ejecutarNonQuery("TA_NICHO_Update", parameters);
+				x_oENT_TA_NICHO.NICB_STATUSRESPONSE = (int)ejecutarScalar("TA_NICHO_Update", parameters);
+				//ejecutarNonQuery("TA_NICHO_Update", parameters);
 			}
 			catch (Exception ex)
 			{
 				throw controlarExcepcion("Error de operación de acceso a datos.", ex);
 			}
+		}
+
+		/// <summary>
+		/// Actualiza la cantidad de espacios libres en un NICHO.
+		/// </summary>
+		public ENT_TA_NICHO UpdateSpace(int NICN_IDNICHO)
+		{
+			SqlParameter[] parameters = null;
+			try
+			{
+				parameters = new SqlParameter[]
+				{
+					new SqlParameter("@NICN_IDNICHO", NICN_IDNICHO)
+				};
+			}
+			catch (Exception ex)
+			{
+				throw controlarExcepcion("Error de asignación de parámetros.", ex);
+			}
+
+			ENT_TA_NICHO objTA_NICHO = new ENT_TA_NICHO();
+			try
+			{
+				objTA_NICHO.NICB_STATUSRESPONSE = (int)ejecutarScalar("TA_NICHO_UpdateSpace", parameters);
+			}
+			catch (Exception ex)
+			{
+				throw controlarExcepcion("Error de operación de acceso a datos.", ex);
+			}
+			return objTA_NICHO; 
 		}
 
 		/// <summary>

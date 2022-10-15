@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SW.CEMENTERIO.BusinessLogicLayer;
 using SW.CEMENTERIO.EntityLayer;
 using SW.CEMENTERIO.Models;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace SW.CEMENTERIO.Controllers
 {
@@ -13,7 +15,10 @@ namespace SW.CEMENTERIO.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("idUsuario") != null)
+                return View();
+            else
+                return RedirectToAction("Index", "Admin");
         }
 
         [HttpPost]
@@ -98,17 +103,20 @@ namespace SW.CEMENTERIO.Controllers
             ResponseViewModel oResponse = new();
             try
             {
-                BLL_TA_NICHO pabellonLN = new BLL_TA_NICHO();
+                BLL_TA_NICHO nichoLN = new BLL_TA_NICHO();
                 if (objNicho.NICN_IDNICHO == 0)
                 {
-                    objNicho.NICS_USUREGISTRO = "ADMIN";
-                    pabellonLN.Insert(objNicho);
+                    objNicho.NICB_NUMDIFACTUAL = objNicho.NICB_NUMDIFTOTAL;
+                    objNicho.NICS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador"); ;
+                    nichoLN.Insert(objNicho);
                 }
                 else
                 {
-                    objNicho.NICS_USUMODIFICA = "ADMIN";
+                    objNicho.NICS_USUMODIFICA = HttpContext.Session.GetString("idTrabajador");
                     objNicho.NICD_FECMODIFICA = DateTime.Now;
-                    pabellonLN.Update(objNicho);
+                    nichoLN.Update(objNicho);
+                    if (objNicho.NICB_STATUSRESPONSE == 0) throw new Exception("La cantidad de difuntos registrados es mayor a la que se intenta actualizar.");
+
                 }
                 oResponse.Estado = true;
                 oResponse.Titulo = "Éxito";

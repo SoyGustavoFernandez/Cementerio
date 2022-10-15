@@ -343,6 +343,15 @@ function generarAleatorio(length, type) {
     return random;
 }
 
+function colorAleatorio() {
+    var makingColorCode = '0123456789ABCDEF';
+    var finalCode = '#';
+    for (var counter = 0; counter < 6; counter++) {
+        finalCode = finalCode + makingColorCode[Math.floor(Math.random() * 16)];
+    }
+    return finalCode;
+}
+
 var obtener_hora = () => hora + ':' + minuto;
 
 //var obtener_dia = () => dia + '/' + mes + '/' + ano;
@@ -867,7 +876,6 @@ function limpiarDatos() {
 }
 
 function limpiarDatosDetalle() {
-    $('input').val('');
     $('input[class="form-control detalle"]').val('');
     $('input[class="form-control detalle soloNumero"]').val('');
 }

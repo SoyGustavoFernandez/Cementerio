@@ -10,7 +10,7 @@ function buscar() {
         contentType: false,
         processData: false,
         success: function (data) {
-            es_vacio(!data.response){
+            if (!es_vacio(data.response)) {
                 if (data.response.estado) {
                     $("#lblTotalDifuntos").html(data.response.adicionalInt);
                     let _label = data.resultado.labels;

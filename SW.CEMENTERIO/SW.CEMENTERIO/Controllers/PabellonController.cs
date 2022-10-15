@@ -17,7 +17,10 @@ namespace SW.CEMENTERIO.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("idUsuario") != null)
+                return View();
+            else
+                return RedirectToAction("Index", "Admin");
         }
 
         [HttpPost]
@@ -68,12 +71,12 @@ namespace SW.CEMENTERIO.Controllers
                 BLL_TA_PABELLON pabellonLN = new BLL_TA_PABELLON();
                 if (objPabellon.PABN_IDPABELLON == 0)
                 {
-                    objPabellon.PABS_USUREGISTRO = "ADMIN";
+                    objPabellon.PABS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador");;
                     pabellonLN.Insert(objPabellon);
                 }
                 else
                 {
-                    objPabellon.PABS_USUMODIFICA = "ADMIN";
+                    objPabellon.PABS_USUMODIFICA = HttpContext.Session.GetString("idTrabajador");
                     objPabellon.PABD_FECMODIFICA = DateTime.Now;
                     pabellonLN.Update(objPabellon);
                 }
@@ -138,7 +141,8 @@ namespace SW.CEMENTERIO.Controllers
                         objNicho.PABS_NOMBRE = Sheet.Cells[IndiceFila, 1].Value != null ? Sheet.Cells[IndiceFila, 1].Value.ToString() : throw new Exception("El campo " + IndiceFila + ", 1 tiene un formato incorrecto");
                         objNicho.PABS_TIPO = Sheet.Cells[IndiceFila, 2].Value != null ? Convert.ToInt32(Sheet.Cells[IndiceFila, 2].Value) : throw new Exception("El campo " + IndiceFila + ", 2 tiene un formato incorrecto");
                         objNicho.NICS_CODNICHO = Sheet.Cells[IndiceFila, 3].Value != null ? Sheet.Cells[IndiceFila, 3].Value.ToString() : throw new Exception("El campo " + IndiceFila + ", 3 tiene un formato incorrecto");
-                        objNicho.NICB_NUMDIF = Sheet.Cells[IndiceFila, 4].Value != null ? Convert.ToInt32(Sheet.Cells[IndiceFila, 4].Value) : throw new Exception("El campo " + IndiceFila + ", 4 tiene un formato incorrecto");
+                        objNicho.NICB_NUMDIFTOTAL = Sheet.Cells[IndiceFila, 4].Value != null ? Convert.ToInt32(Sheet.Cells[IndiceFila, 4].Value) : throw new Exception("El campo " + IndiceFila + ", 4 tiene un formato incorrecto");
+                        objNicho.NICB_NUMDIFACTUAL = Sheet.Cells[IndiceFila, 4].Value != null ? Convert.ToInt32(Sheet.Cells[IndiceFila, 4].Value) : throw new Exception("El campo " + IndiceFila + ", 4 tiene un formato incorrecto");
                         lstNichos.Add(objNicho);
                     }
                 }
@@ -155,14 +159,14 @@ namespace SW.CEMENTERIO.Controllers
                 {
                     item.PABN_IDCEMENTERIO = 1;
                     item.PABS_UBICACION = "";
-                    item.PABS_USUREGISTRO = "ADMIN";
+                    item.PABS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador");;
                     BLL_TA_PABELLON bllPabellon = new BLL_TA_PABELLON();
                     bllPabellon.Insert(item);
                 }
 
                 foreach (var item in lstNichos)
                 {
-                    item.NICS_USUREGISTRO = "ADMIN";
+                    item.NICS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador");;
                     BLL_TA_NICHO bllNicho = new BLL_TA_NICHO();
                     item.NICN_IDPABELLON = TMP_lstPabellon.Find(x => x.PABS_NOMBRE == item.PABS_NOMBRE).PABN_IDPABELLON;
                     bllNicho.Insert(item);

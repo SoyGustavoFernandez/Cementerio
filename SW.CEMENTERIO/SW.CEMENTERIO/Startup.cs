@@ -1,14 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SW.CEMENTERIO
 {
@@ -27,18 +23,19 @@ namespace SW.CEMENTERIO
             services.AddControllersWithViews();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
+            services.AddDistributedMemoryCache();
+
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(120);
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
-
             });
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -52,6 +49,10 @@ namespace SW.CEMENTERIO
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            //loggerFactory.AddSyslog(
+            //   Configuration.GetValue<string>("Papertrail:host"),
+            //   Configuration.GetValue<int>("Papertrail:port"));
 
             app.UseRouting();
 

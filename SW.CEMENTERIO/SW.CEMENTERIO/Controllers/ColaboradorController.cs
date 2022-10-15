@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SW.CEMENTERIO.BusinessLogicLayer;
 using SW.CEMENTERIO.EntityLayer;
@@ -16,7 +17,10 @@ namespace SW.CEMENTERIO.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("idUsuario") != null)
+                return View();
+            else
+                return RedirectToAction("Index", "Admin");
         }
 
         [HttpPost]
@@ -69,20 +73,20 @@ namespace SW.CEMENTERIO.Controllers
                 using TransactionScope scope = new TransactionScope();
                 if (objColaborador.COLN_IDCOLABORADOR == 0)
                 {
-                    objColaborador.COLS_USUREGISTRO = "ADMIN";
+                    objColaborador.COLS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador");
                     ColaboradorLN.Insert(objColaborador);
 
                     objColaborador.LOGN_IDCOLABORADOR = objColaborador.COLN_IDCOLABORADOR;
                     objColaborador.LOGS_USUARIO = objColaborador.COLS_CORREO;
                     objColaborador.LOGS_CLAVE = Utilitarios.EncriptarPassword(Utilitarios.NumeroAletorio());
-                    objColaborador.LOGS_USUREGISTRO = "ADMIN";
+                    objColaborador.LOGS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador");;
                     loginLN.Insert(objColaborador);
 
                     EnvioClave(objColaborador.COLN_IDCOLABORADOR.ToString(), "Te damos la bienvenida al Sistema");
                 }
                 else
                 {
-                    objColaborador.COLS_USUMODIFICA = "ADMIN";
+                    objColaborador.COLS_USUMODIFICA = HttpContext.Session.GetString("idTrabajador");
                     objColaborador.COLD_FECMODIFICA = DateTime.Now;
                     ColaboradorLN.Update(objColaborador);
                 }

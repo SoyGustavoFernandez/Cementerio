@@ -178,7 +178,8 @@ function buscar_detalle(_id, _async = true) {
         columns: [
             { "name": "nicS_CODNICHO", "data": "nicS_CODNICHO", "class": "text-center" },
             { "name": "nicB_ESTADONICHO", "data": "nicB_ESTADONICHO", "class": "text-center" },
-            { "name": "nicB_NUMDIF", "data": "nicB_NUMDIF", "class": "text-center" }
+            { "name": "nicB_NUMDIFTOTAL", "data": "nicB_NUMDIFTOTAL", "class": "text-center" },
+            { "name": "nicB_NUMDIFACTUAL", "data": "nicB_NUMDIFACTUAL", "class": "text-center" }
         ],
         columnDefs: [
             {
@@ -189,7 +190,7 @@ function buscar_detalle(_id, _async = true) {
                 }
             },
             {
-                targets: 3,
+                targets: 4,
                 data: 'nicN_IDNICHO',
                 orderable: false,
                 width: "20%",
@@ -221,7 +222,7 @@ function verNicho(id)  {
                 if (data.estado) {
                     $("#idNicho").val(data.datos[0].nicN_IDNICHO);
                     $("#codigoNicho").val(data.datos[0].nicS_CODNICHO);
-                    $("#numDifNicho").val(data.datos[0].nicB_NUMDIF);
+                    $("#numDifNicho").val(data.datos[0].nicB_NUMDIFTOTAL);
                     $("#lblmodalNicho").html(data.datos[0].nicS_CODNICHO);
                 } else {
                     mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
@@ -244,7 +245,7 @@ function addNicho() {
         NICN_IDNICHO: _id,
         NICS_CODNICHO: _codigo,
         NICN_IDPABELLON: _idPabellon,
-        NICB_NUMDIF: _numDif
+        NICB_NUMDIFTOTAL: _numDif
     }
     if (!$("#codigoNicho").get(0).checkValidity() || !$("#numDifNicho").get(0).checkValidity()) {
         $("#formNicho").addClass('was-validated');

@@ -10,36 +10,41 @@ function buscar() {
         contentType: false,
         processData: false,
         success: function (data) {
-            if (data.response.estado) {
-                //$("#lblTotalDifuntos").html(data.response.datos.sum('cantidaD_DIFUNTOS'));
-                new Chart(document.getElementById('chartDifuntos').getContext('2d'),
-                    {
-                        type: 'doughnut',
-                        data: {
-                            labels: [data.resultado.labels],
-                            datasets: [{
-                                data: [data.resultado.data],
-                                backgroundColor: [
-                                    '#923eb9',
-                                    '#f73757',
-                                    '#18bb6b'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            maintainAspectRatio: false,
-                            cutout: 125,
-                            plugins: {
-                                legend: {
-                                    display: false,
+            es_vacio(!data.response){
+                if (data.response.estado) {
+                    $("#lblTotalDifuntos").html(data.response.adicionalInt);
+                    let _label = data.resultado.labels;
+                    let _data = data.resultado.data;
+                    new Chart(document.getElementById('chartDifuntos').getContext('2d'),
+                        {
+                            type: 'doughnut',
+                            data: {
+                                labels: _label,
+                                datasets: [{
+                                    data: _data,
+                                    backgroundColor: ['#923eb9',
+                                        '#f73757',
+                                        '#18bb6b',
+                                        '#32bfff',
+                                        '#ffab4d',
+                                        '#0a58ca'],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                maintainAspectRatio: false,
+                                cutout: 125,
+                                plugins: {
+                                    legend: {
+                                        display: false,
+                                    }
                                 }
-                            }
 
-                        }
-                    });
-            } else {
-                mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
+                            }
+                        });
+                } else {
+                    mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
+                }
             }
         },
         error: function (error) {

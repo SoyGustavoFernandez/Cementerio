@@ -26,6 +26,15 @@ namespace SW.CEMENTERIO.BusinessLogicLayer
 			 new DAL_TA_NICHO().Update(x_oENT_TA_NICHO);
 		}
 
+
+		/// <summary>
+		/// Actualiza a registro de la tabla TA_NICHO.
+		/// </summary>
+		public ENT_TA_NICHO UpdateSpace(int NICN_IDNICHO)
+		{
+			return new DAL_TA_NICHO().UpdateSpace(NICN_IDNICHO);
+		}
+		
 		/// <summary>
 		/// Elimina un registro de la tabla TA_NICHO por su primary key.
 		/// </summary>

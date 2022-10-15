@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SW.CEMENTERIO.Models;
 using System;
@@ -20,12 +21,10 @@ namespace SW.CEMENTERIO.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            if (HttpContext.Session.GetInt32("idUsuario") != null)
+                return View();
+            else
+                return RedirectToAction("Index", "Admin");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

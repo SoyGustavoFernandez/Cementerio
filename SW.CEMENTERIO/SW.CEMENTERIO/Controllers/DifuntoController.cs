@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SW.CEMENTERIO.BusinessLogicLayer;
 using SW.CEMENTERIO.DataAccessLayer;
 using SW.CEMENTERIO.EntityLayer;
@@ -15,7 +16,10 @@ namespace SW.CEMENTERIO.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("idUsuario") != null)
+                return View();
+            else
+                return RedirectToAction("Index", "Admin");
         }
 
         [HttpPost]
@@ -65,15 +69,16 @@ namespace SW.CEMENTERIO.Controllers
             try
             {
                 BLL_TA_DIFUNTO obj_TA_DIFUNTO = new BLL_TA_DIFUNTO();
+                BLL_TA_NICHO nichoLN = new BLL_TA_NICHO();
                 BLL_TA_NICHO_DIFUNTO obj_TA_NICHO_DIFUNTO = new BLL_TA_NICHO_DIFUNTO();
                 if (objDifunto.DIFN_IDDIFUNTO == 0)
                 {
-                    objDifunto.DIFS_USUREGISTRO = "ADMIN";
+                    objDifunto.DIFS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador");
                     obj_TA_DIFUNTO.Insert(objDifunto);
                 }
                 else
                 {
-                    objDifunto.DIFS_USUMODIFICA = "ADMIN";
+                    objDifunto.DIFS_USUMODIFICA = HttpContext.Session.GetString("idTrabajador");
                     objDifunto.DIFD_FECMODIFICA = DateTime.Now;
                     obj_TA_DIFUNTO.Update(objDifunto);
                 }
@@ -81,15 +86,20 @@ namespace SW.CEMENTERIO.Controllers
                 objDifunto.NICDIFN_IDDIFUNTO = objDifunto.DIFN_IDDIFUNTO;
                 if (objDifunto.NICDIFN_IDNICHODIFUNTO == 0)
                 {
-                    objDifunto.NICDIFS_USUREGISTRO = "ADMIN";
+                    objDifunto.NICDIFS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador");
                     obj_TA_NICHO_DIFUNTO.Insert(objDifunto);
                 }
                 else
                 {
-                    objDifunto.NICDIFS_USUMODIFICA = "ADMIN";
+                    objDifunto.NICDIFS_USUMODIFICA = HttpContext.Session.GetString("idTrabajador");
                     objDifunto.NICDIFD_FECMODIFICA = DateTime.Now;
                     obj_TA_NICHO_DIFUNTO.Update(objDifunto);
                 }
+
+                ENT_TA_NICHO objNicho = new ENT_TA_NICHO();
+                objNicho = nichoLN.UpdateSpace(objDifunto.NICN_IDNICHO);
+                if (objNicho.NICB_STATUSRESPONSE == 0) throw new Exception("No se puede agregar más difuntos en el nicho seleccionado. Excede límite disponible");
+
                 oResponse.Estado = true;
                 oResponse.Titulo = "Éxito";
                 oResponse.AdicionalInt = objDifunto.NICDIFN_IDNICHODIFUNTO;

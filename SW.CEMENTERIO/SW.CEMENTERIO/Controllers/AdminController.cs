@@ -4,9 +4,6 @@ using SW.CEMENTERIO.BusinessLogicLayer;
 using SW.CEMENTERIO.EntityLayer;
 using SW.CEMENTERIO.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SW.CEMENTERIO.Controllers
 {
@@ -41,14 +38,13 @@ namespace SW.CEMENTERIO.Controllers
                 BLL_TA_LOGIN loginLN = new BLL_TA_LOGIN();
                 modelo = loginLN.AutenticarLogin(oLogin.LOGS_USUARIO, Utilitarios.EncriptarPassword(oLogin.LOGS_CLAVE));
 
-                if (modelo != null)
+                if (modelo.LOGN_IDLOGIN > 0)
                 {
                     oResponse.Estado = true;
                     oResponse.Mensaje = "Login Correcto";
                     HttpContext.Session.SetInt32("idUsuario", modelo.LOGN_IDLOGIN);
                     HttpContext.Session.SetInt32("idTrabajador", modelo.COLN_IDCOLABORADOR);
-                    HttpContext.Session.SetString("nombreUsuario", modelo.COLS_NOMBRES + " " + modelo.COLS_APEMATERNO + "" + modelo.COLS_APEMATERNO);
-                    oResponse.AdicionalTxt = modelo.LOGN_IDLOGIN;
+                    oResponse.AdicionalTxt = modelo.COLS_NOMBRES;
                 }
                 else
                 {
@@ -67,5 +63,9 @@ namespace SW.CEMENTERIO.Controllers
             }
         }
 
+        public IActionResult CerrarSession()
+        {
+            return RedirectToAction("Index", "Admin");
+        }
     }
 }

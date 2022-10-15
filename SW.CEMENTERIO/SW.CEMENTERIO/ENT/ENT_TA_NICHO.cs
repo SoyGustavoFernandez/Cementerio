@@ -16,11 +16,12 @@ namespace SW.CEMENTERIO.EntityLayer
 		/// <summary>
 		/// Initializes a new instance of the ENT_TA_NICHO class.
 		/// </summary>
-		public ENT_TA_NICHO(string NICS_CODNICHO, int NICB_ESTADONICHO, int NICB_NUMDIF, int NICN_IDPABELLON, string NICS_USUREGISTRO, DateTime NICD_FECREGISTRO, string NICS_USUMODIFICA, DateTime NICD_FECMODIFICA, bool NICB_ESTADO)
+		public ENT_TA_NICHO(string NICS_CODNICHO, int NICB_ESTADONICHO, int NICB_NUMDIFTOTAL, int NICB_NUMDIFACTUAL, int NICN_IDPABELLON, string NICS_USUREGISTRO, DateTime NICD_FECREGISTRO, string NICS_USUMODIFICA, DateTime NICD_FECMODIFICA, bool NICB_ESTADO)
 		{
 			this.NICS_CODNICHO = NICS_CODNICHO;
 			this.NICB_ESTADONICHO = NICB_ESTADONICHO;
-			this.NICB_NUMDIF = NICB_NUMDIF;
+			this.NICB_NUMDIFTOTAL = NICB_NUMDIFTOTAL;
+			this.NICB_NUMDIFACTUAL = NICB_NUMDIFACTUAL;
 			this.NICN_IDPABELLON = NICN_IDPABELLON;
 			this.NICS_USUREGISTRO = NICS_USUREGISTRO;
 			this.NICD_FECREGISTRO = NICD_FECREGISTRO;
@@ -32,12 +33,13 @@ namespace SW.CEMENTERIO.EntityLayer
 		/// <summary>
 		/// Initializes a new instance of the ENT_TA_NICHO class.
 		/// </summary>
-		public ENT_TA_NICHO(int NICN_IDNICHO, string NICS_CODNICHO, int NICB_ESTADONICHO, int NICB_NUMDIF, int NICN_IDPABELLON, string NICS_USUREGISTRO, DateTime NICD_FECREGISTRO, string NICS_USUMODIFICA, DateTime NICD_FECMODIFICA, bool NICB_ESTADO)
+		public ENT_TA_NICHO(int NICN_IDNICHO, string NICS_CODNICHO, int NICB_ESTADONICHO, int NICB_NUMDIFTOTAL, int NICB_NUMDIFACTUAL, int NICN_IDPABELLON, string NICS_USUREGISTRO, DateTime NICD_FECREGISTRO, string NICS_USUMODIFICA, DateTime NICD_FECMODIFICA, bool NICB_ESTADO)
 		{
 			this.NICN_IDNICHO = NICN_IDNICHO;
 			this.NICS_CODNICHO = NICS_CODNICHO;
 			this.NICB_ESTADONICHO = NICB_ESTADONICHO;
-			this.NICB_NUMDIF = NICB_NUMDIF;
+			this.NICB_NUMDIFTOTAL = NICB_NUMDIFTOTAL;
+			this.NICB_NUMDIFACTUAL = NICB_NUMDIFACTUAL;
 			this.NICN_IDPABELLON = NICN_IDPABELLON;
 			this.NICS_USUREGISTRO = NICS_USUREGISTRO;
 			this.NICD_FECREGISTRO = NICD_FECREGISTRO;
@@ -65,9 +67,14 @@ namespace SW.CEMENTERIO.EntityLayer
 		public int NICB_ESTADONICHO { get; set; }
 
 		/// <summary>
-		/// Gets or sets the NICB_NUMDIF value. 
+		/// Gets or sets the NICB_NUMDIFTOTAL value. 
 		/// </summary>
-		public int NICB_NUMDIF { get; set; }
+		public int NICB_NUMDIFTOTAL { get; set; }
+
+		/// <summary>
+		/// Gets or sets the NICB_NUMDIFTOTAL value. 
+		/// </summary>
+		public int NICB_NUMDIFACTUAL { get; set; }
 
 		/// <summary>
 		/// Gets or sets the NICN_IDPABELLON value. 
@@ -99,6 +106,7 @@ namespace SW.CEMENTERIO.EntityLayer
 		/// </summary>
 		public bool NICB_ESTADO { get; set; }
 
+		public int NICB_STATUSRESPONSE { get; set; }
 		#endregion
 	}
 }

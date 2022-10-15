@@ -243,6 +243,7 @@ D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTER
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\plugins\vectormap\jvectormap.custom.js
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\css\site.css
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\favicon.ico
+D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\js\admin.js
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\js\colaborador.js
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\js\dashboard.js
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\js\difunto.js
@@ -282,7 +283,7 @@ D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTER
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.min.js
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.min.map
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\lib\jquery\LICENSE.txt
-D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\web.config
+D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\app.config
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\appsettings.Development.json
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\appsettings.json
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\refs\Microsoft.AspNetCore.Antiforgery.dll
@@ -571,6 +572,7 @@ D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTER
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\SW.CEMENTERIO.dll
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\SW.CEMENTERIO.deps.json
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\SW.CEMENTERIO.runtimeconfig.json
+D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\SW.CEMENTERIO.dll.config
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\SW.CEMENTERIO.pdb
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\DocumentFormat.OpenXml.dll
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\EPPlus.dll

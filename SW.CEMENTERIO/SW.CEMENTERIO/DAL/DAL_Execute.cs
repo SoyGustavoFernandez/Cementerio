@@ -6,6 +6,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Text;
 using log4net;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.ApplicationBlocks.Data
 {
@@ -14,6 +15,12 @@ namespace Microsoft.ApplicationBlocks.Data
         protected string strConexion = ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString;
         protected bool Ejecutado = false;
         protected string Error = string.Empty;
+        private readonly ILogger<DAL_Execute> _logger;
+
+        public DAL_Execute(ILogger<DAL_Execute> logger)
+        {
+            _logger = logger;
+        }
 
         #region OPERACIONES UNITARIAS
 
@@ -85,7 +92,6 @@ namespace Microsoft.ApplicationBlocks.Data
         }
 
         #endregion
-
 
         #region TRANSACCIONES UNITARIAS
         public DAL_Execute()
@@ -550,6 +556,7 @@ namespace Microsoft.ApplicationBlocks.Data
             Ejecutado = false;
             ILog oILog = LogManager.GetLogger(this.GetType());
             oILog.Error(x_excepcion.Message, x_excepcion);
+            _logger.LogError(x_excepcion, x_excepcion.Message, null);
             _DataRuntimeException drex = new _DataRuntimeException(x_mensaje, x_excepcion);
             return drex;
         }
