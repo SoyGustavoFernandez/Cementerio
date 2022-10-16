@@ -176,5 +176,41 @@ namespace SW.CEMENTERIO.Controllers
                 return Json(oResponse);
             }
         }
+
+        [HttpGet]
+        public JsonResult BuscarSerQuerido(ENT_TA_DIFUNTO objDifunto)
+        {
+            ResponseViewModel oResponse = new();
+            try
+            {
+                List<ENT_TA_DIFUNTO> modelo = new List<ENT_TA_DIFUNTO>();
+                BLL_TA_DIFUNTO difuntoLN = new BLL_TA_DIFUNTO();
+                modelo = difuntoLN.BuscarSerQuerido(objDifunto);
+                if (modelo.Count > 0)
+                {
+                    oResponse.Estado = true;
+                    oResponse.Tipo = 1;
+                    oResponse.Mensaje = "Lista Obtenida";
+                    oResponse.Datos = modelo;
+                    return Json(oResponse);
+                }
+                else
+                {
+                    oResponse.Tipo = 0;
+                    oResponse.Estado = false;
+                    oResponse.Mensaje = "No se encontraron datos";
+                    oResponse.Datos = modelo;
+                    return Json(oResponse);
+                }
+            }
+            catch (Exception e)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = e.Message;
+                return Json(oResponse);
+            }
+        }
     }
 }

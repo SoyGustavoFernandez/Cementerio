@@ -21,10 +21,7 @@ namespace SW.CEMENTERIO.Controllers
 
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("idUsuario") != null)
                 return View();
-            else
-                return RedirectToAction("Index", "Admin");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

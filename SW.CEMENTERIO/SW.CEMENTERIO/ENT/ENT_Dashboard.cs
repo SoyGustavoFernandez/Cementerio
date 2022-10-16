@@ -10,4 +10,12 @@ namespace SW.CEMENTERIO.ENT
         public int CANTIDAD_DIFUNTOS { get; set; }
         public string PABELLON { get; set; }
     }
+
+    public class TotalPabellon
+    {
+        public int NICHOS_LIBRES { get; set; }
+        public int NICHOS_OCUPADOS { get; set; }
+        public string PABELLON { get; set; }
+    }
+
 }

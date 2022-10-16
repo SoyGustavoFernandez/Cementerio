@@ -66,6 +66,13 @@ namespace SW.CEMENTERIO.BusinessLogicLayer
 			return new DAL_TA_DIFUNTO().SelectAllByDIFN_IDCEMENTERIO(DIFN_IDCEMENTERIO);
 		}
 
+		/// <summary>
+		/// Selecciona una registro de la tabla TA_DIFUNTO por nombres o apellidos.
+		/// </summary>
+		public List<ENT_TA_DIFUNTO> BuscarSerQuerido(ENT_TA_DIFUNTO x_oENT_TA_DIFUNTO)
+		{
+			return new DAL_TA_DIFUNTO().BuscarSerQuerido(x_oENT_TA_DIFUNTO);
+		}
 
 		#endregion
 	}

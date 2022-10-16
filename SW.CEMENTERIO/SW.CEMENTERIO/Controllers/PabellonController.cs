@@ -175,14 +175,14 @@ namespace SW.CEMENTERIO.Controllers
                 {
                     item.PABN_IDCEMENTERIO = 1;
                     item.PABS_UBICACION = "";
-                    item.PABS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador");;
+                    item.PABS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador");
                     BLL_TA_PABELLON bllPabellon = new BLL_TA_PABELLON();
                     bllPabellon.Insert(item);
                 }
 
                 foreach (var item in lstNichos)
                 {
-                    item.NICS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador");;
+                    item.NICS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador");
                     BLL_TA_NICHO bllNicho = new BLL_TA_NICHO();
                     item.NICN_IDPABELLON = TMP_lstPabellon.Find(x => x.PABS_NOMBRE == item.PABS_NOMBRE).PABN_IDPABELLON;
                     bllNicho.Insert(item);

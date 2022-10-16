@@ -109,11 +109,9 @@ function eliminarPabellon(id) {
                 data: { idPabellon: id },
                 dataType: 'json',
                 success: function (data) {
-                    if (data.estado) {
+                    if (data.estado)
                         buscar();
-                    } else {
-                        mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
-                    }
+                    mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
                 },
                 error: function (error) {
                     mostrarMensaje("Error", "Codigo: " + error.status + " - " + error.responseText, 2, true);

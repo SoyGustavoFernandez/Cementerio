@@ -4,6 +4,7 @@
         format: 'DD/MM/YYYY',
         time: false,
         lang: 'es',
+        maxDate: moment(),
         cancelText: 'CERRAR'
     });
 });

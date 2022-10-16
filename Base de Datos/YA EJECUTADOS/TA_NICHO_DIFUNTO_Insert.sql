@@ -1,4 +1,4 @@
-USE [BD_CEMENTERIO]
+USE [db_a74b52_cementerio]
 GO
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[TA_NICHO_DIFUNTO_Insert]') and ObjectProperty(id, N'IsProcedure') = 1)
 	DROP PROCEDURE [dbo].[TA_NICHO_DIFUNTO_Insert]

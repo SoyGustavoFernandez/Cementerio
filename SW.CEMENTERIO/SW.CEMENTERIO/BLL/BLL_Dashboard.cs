@@ -16,5 +16,13 @@ namespace SW.CEMENTERIO.BLL
 		{
 			return new DAL_Dashboard().BuscarDifuntos();
 		}
+
+		/// <summary>
+		/// Selecciona todos los registro de la tabla TA_PABELLON.
+		/// </summary>
+		public List<TotalPabellon> BuscarPabellones()
+		{
+			return new DAL_Dashboard().BuscarPabellones();
+		}
 	}
 }

@@ -205,6 +205,36 @@ namespace SW.CEMENTERIO.DataAccessLayer
 			return x_oENT_TA_DIFUNTOList;
 		}
 
+		/// <summary>
+		/// Selecciona todos los registro de la tabla TA_DIFUNTO por nombres o apellidos.
+		/// </summary>
+		public List<ENT_TA_DIFUNTO> BuscarSerQuerido(ENT_TA_DIFUNTO x_oENT_TA_DIFUNTO)
+		{
+			SqlParameter[] parameters = null;
+			try
+			{
+				parameters = new SqlParameter[]
+				{
+					new SqlParameter("@DIFS_NOMBRES", x_oENT_TA_DIFUNTO.DIFS_NOMBRES),
+					new SqlParameter("@DIFS_APEPATERNO", x_oENT_TA_DIFUNTO.DIFS_APEPATERNO),
+					new SqlParameter("@DIFS_APEMATERNO", x_oENT_TA_DIFUNTO.DIFS_APEMATERNO)
+				};
+			}
+			catch (Exception ex)
+			{
+				throw controlarExcepcion("Error de asignación de parámetros.", ex);
+			};
+			List<ENT_TA_DIFUNTO> x_oENT_TA_DIFUNTOList = new List<ENT_TA_DIFUNTO>();
+			try
+			{
+				x_oENT_TA_DIFUNTOList = GetList<ENT_TA_DIFUNTO>("TA_DIFUNTO_BuscarSerQuerido", parameters);
+				return x_oENT_TA_DIFUNTOList;
+			}
+			catch (Exception ex)
+			{
+				throw controlarExcepcion("Error de asignación de parámetros.", ex);
+			}
+		}
 
 		#endregion
 	}

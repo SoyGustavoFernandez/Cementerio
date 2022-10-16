@@ -26,5 +26,23 @@ namespace SW.CEMENTERIO.DAL
 				throw controlarExcepcion("Error de asignación de parámetros.", ex);
 			}
 		}
+
+		/// <summary>
+		/// Muestra la cantidad de pabellones registrados.
+		/// </summary>
+		public List<TotalPabellon> BuscarPabellones()
+		{
+			try
+			{
+				List<TotalPabellon> x_oENT_DashboardList = new List<TotalPabellon>();
+
+				x_oENT_DashboardList = GetList<TotalPabellon>("Dashboard_TotalPabellones");
+				return x_oENT_DashboardList;
+			}
+			catch (Exception ex)
+			{
+				throw controlarExcepcion("Error de asignación de parámetros.", ex);
+			}
+		}
 	}
 }

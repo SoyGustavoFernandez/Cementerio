@@ -1,4 +1,4 @@
-USE [BD_CEMENTERIO]
+USE [db_a74b52_cementerio]
 GO
 IF EXISTS (SELECT * FROM dbo.sysobjects where id = object_id(N'[dbo].[TA_NICHO_Select]') and ObjectProperty(id, N'IsProcedure') = 1)
 	DROP PROCEDURE [dbo].[TA_NICHO_Select]
@@ -25,7 +25,8 @@ BEGIN
     SELECT     [NICN_IDNICHO],
     	    [NICS_CODNICHO],
     	    [NICB_ESTADONICHO],
-    	    [NICB_NUMDIF],
+    	    [NICB_NUMDIFTOTAL],
+    	    [NICB_NUMDIFACTUAL],
     	    [NICN_IDPABELLON],
     	    [NICS_USUREGISTRO],
     	    [NICD_FECREGISTRO],
