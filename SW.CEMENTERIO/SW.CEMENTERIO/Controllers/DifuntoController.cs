@@ -136,7 +136,7 @@ namespace SW.CEMENTERIO.Controllers
                 oResponse.Tipo = 2;
                 oResponse.Estado = false;
                 oResponse.Titulo = "Error";
-                oResponse.Mensaje = e.Message;
+                oResponse.Mensaje = "Error en operación de Acceso a Datos: " + e.Message;
                 return Json(oResponse);
             }
         }
@@ -156,7 +156,7 @@ namespace SW.CEMENTERIO.Controllers
                 BLL_TA_NICHO nichoLN = new BLL_TA_NICHO();
                 objNicho = nichoLN.Select(objNichoDifunto.NICDIFN_IDNICHO);
                 objNicho = nichoLN.UpdateSpace(objNicho.NICN_IDNICHO, 1);
-            
+
                 BLL_TA_NICHO_DIFUNTO DifuntoLN = new BLL_TA_NICHO_DIFUNTO();
                 DifuntoLN.Delete(idDifunto);
                 oResponse.Estado = true;
@@ -198,6 +198,42 @@ namespace SW.CEMENTERIO.Controllers
                 {
                     oResponse.Tipo = 0;
                     oResponse.Estado = false;
+                    oResponse.Mensaje = "No se encontraron datos";
+                    oResponse.Datos = modelo;
+                    return Json(oResponse);
+                }
+            }
+            catch (Exception e)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = e.Message;
+                return Json(oResponse);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult BuscarPorDNI(string dni)
+        {
+            ResponseViewModel oResponse = new();
+            try
+            {
+                List<ENT_TA_NICHO_DIFUNTO> modelo = new List<ENT_TA_NICHO_DIFUNTO>();
+                BLL_TA_NICHO_DIFUNTO difuntoLN = new BLL_TA_NICHO_DIFUNTO();
+                modelo.Add(difuntoLN.SelectByDNI(dni));
+                if (modelo.FirstOrDefault() != null)
+                {
+                    oResponse.Estado = true;
+                    oResponse.Tipo = 1;
+                    oResponse.Mensaje = "Lista Obtenida";
+                    oResponse.Datos = modelo;
+                    return Json(oResponse);
+                }
+                else
+                {
+                    oResponse.Tipo = 0;
+                    oResponse.Estado = true;
                     oResponse.Mensaje = "No se encontraron datos";
                     oResponse.Datos = modelo;
                     return Json(oResponse);

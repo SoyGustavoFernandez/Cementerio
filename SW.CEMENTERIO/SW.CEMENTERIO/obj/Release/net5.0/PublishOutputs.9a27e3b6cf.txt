@@ -35,6 +35,9 @@ D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTER
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\avatars\08.png
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\avatars\09.png
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\avatars\10.png
+D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\avatars\11.png
+D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\avatars\descarga (1).png
+D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\avatars\descarga.png
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\cards\01.png
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\cards\02.png
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\cards\03.png
@@ -247,6 +250,7 @@ D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTER
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\js\colaborador.js
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\js\dashboard.js
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\js\difunto.js
+D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\js\home.js
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\js\mensaje.js
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\js\pabellon.js
 D:\Archivos\UTP\VIII CICLO\INTEGRADOR I\GIT\Cementerio\SW.CEMENTERIO\SW.CEMENTERIO\obj\Release\net5.0\PubTmp\Out\wwwroot\js\util.js

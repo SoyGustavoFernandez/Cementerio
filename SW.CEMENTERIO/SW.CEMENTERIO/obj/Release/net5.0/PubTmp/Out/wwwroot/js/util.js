@@ -850,6 +850,7 @@ function cargarNicho(_idPabellon) {
         url: "Nicho/BuscarPorPabellon",
         data: { idPabellon: _idPabellon, valCantidad: true },
         dataType: 'json',
+        async: false,
         success: function (data) {
             if (data.estado) {
                 $("#selectNicho").empty();
@@ -866,7 +867,6 @@ function cargarNicho(_idPabellon) {
     });
 }
 
-
 function limpiarDatos() {
     $('input').val('');
     $('input[class="form-control"]').val('');
@@ -878,4 +878,11 @@ function limpiarDatos() {
 function limpiarDatosDetalle() {
     $('input[class="form-control detalle"]').val('');
     $('input[class="form-control detalle soloNumero"]').val('');
+}
+
+function getParameterByName(_param) {
+    _param = _param.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + _param + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }

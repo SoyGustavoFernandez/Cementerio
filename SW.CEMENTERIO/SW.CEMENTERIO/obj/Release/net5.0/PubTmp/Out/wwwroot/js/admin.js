@@ -1,4 +1,6 @@
-﻿$("#btnLogin").click(function () {
+﻿if (getParameterByName('EXIT') === "1") sessionStorage.clear(); 
+
+$("#btnLogin").click(function () {
     Login();
 });
 
@@ -11,12 +13,12 @@ function Login() {
     };
     $.ajax({
         type: "POST",
-        url: "Admin/AutenticarLogin",
+        url: "../Admin/AutenticarLogin",
         data: oUsuario,
         dataType: "json",
         success: function (data) {
             if (data.estado) {
-                sessionStorage.setItem("idUsuarioSesion", data.adicionalTxt);
+                sessionStorage.setItem("nombreUsuario", data.adicionalTxt);
                 window.location.href = "../Dashboard";
             } else {
                 mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);

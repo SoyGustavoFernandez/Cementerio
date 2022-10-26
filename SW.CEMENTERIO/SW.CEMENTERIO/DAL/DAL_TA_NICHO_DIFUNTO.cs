@@ -255,7 +255,36 @@ namespace SW.CEMENTERIO.DataAccessLayer
 			return x_oENT_TA_NICHO_DIFUNTOList;
 		}
 
+		/// <summary>
+		/// Selecciona una registro de la tabla TA_NICHO_DIFUNTO por su unique key.
+		/// </summary>
+		public ENT_TA_NICHO_DIFUNTO SelectByDNI(string DIFS_DNI)
+		{
+			SqlParameter[] parameters = null;
+			try
+			{
+				parameters = new SqlParameter[]
+				{
+					new SqlParameter("@DIFS_DNI", DIFS_DNI)
+				};
+			}
+			catch (Exception ex)
+			{
+				throw controlarExcepcion("Error de asignación de parámetros.", ex);
+			}
 
+			ENT_TA_NICHO_DIFUNTO objTA_NICHO_DIFUNTO = new ENT_TA_NICHO_DIFUNTO();
+			try
+			{
+				objTA_NICHO_DIFUNTO = GetEntity<ENT_TA_NICHO_DIFUNTO>("TA_DIFUNTO_SelectByDNI", parameters);
+			}
+			catch (Exception ex)
+			{
+				throw controlarExcepcion("Error de operación de acceso a datos.", ex);
+			}
+			return objTA_NICHO_DIFUNTO;
+		}
+		
 		#endregion
 	}
 }

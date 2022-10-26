@@ -53,6 +53,7 @@ function buscar() {
 
 function addDifunto() {
     let _idNichoDifunto = $("#idNichoDifunto").val();
+    let _dni = $("#dniDifunto").val();
     let _idDifunto = $("#idDifunto").val();
     let _nombre = $("#nombreDifunto").val();
     let _apePaterno = $("#apePaterno").val();
@@ -60,11 +61,12 @@ function addDifunto() {
     let _fecDefuncion = $("#fecDefuncion").val();
     let _selectPabellon = $("#selectPabellon").val();
     let _selectNicho = $("#selectNicho").val();
-    if (!$("#nombreDifunto").get(0).checkValidity() || !$("#apePaterno").get(0).checkValidity() || !$("#fecDefuncion").get(0).checkValidity() || !$("#selectPabellon").get(0).checkValidity() || !$("#selectNicho").get(0).checkValidity()) {
+    if (!$("#dniDifunto").get(0).checkValidity() || !$("#nombreDifunto").get(0).checkValidity() || !$("#apePaterno").get(0).checkValidity() || !$("#fecDefuncion").get(0).checkValidity() || !$("#selectPabellon").get(0).checkValidity() || !$("#selectNicho").get(0).checkValidity()) {
         $("#formDifunto").addClass('was-validated');
     } else {
         let objDifunto = {
             NICDIFN_IDNICHODIFUNTO: _idNichoDifunto,
+            DIFS_DNI: _dni,
             DIFN_IDDIFUNTO: _idDifunto,
             DIFS_NOMBRES: _nombre,
             DIFS_APEPATERNO: _apePaterno,
@@ -134,8 +136,16 @@ function verDifunto(id) {
         $("#lblModalDifunto").html("AÑADIR NUEVO DIFUNTO");
         $("#idNichoDifunto").val("");
         $("#btnAddDifunto").html("Registrar");
+        $("#dniDifunto").prop('readonly', false);
+        $("#apePaterno").prop('readonly', true);
+        $("#apeMaterno").prop('readonly', true);
+        $("#nombreDifunto").prop('readonly', true);
     }
     else {
+        $("#dniDifunto").prop('readonly', true);
+        $("#apePaterno").prop('readonly', true);
+        $("#apeMaterno").prop('readonly', true);
+        $("#nombreDifunto").prop('readonly', true);
         $("#btnAddDifunto").html("Actualizar");
         $.ajax({
             type: "POST",
@@ -146,6 +156,7 @@ function verDifunto(id) {
             success: function (data) {
                 if (data.estado) {
                     $("#idNichoDifunto").val(data.datos[0].nicdifN_IDNICHODIFUNTO);
+                    $("#dniDifunto").val(data.datos[0].difS_DNI);
                     $("#idDifunto").val(data.datos[0].difN_IDDIFUNTO);
                     $("#apePaterno").val(data.datos[0].difS_APEPATERNO);
                     $("#apeMaterno").val(data.datos[0].difS_APEMATERNO);
@@ -166,3 +177,36 @@ function verDifunto(id) {
     }
     $("#modalDifunto").modal("show");
 }
+
+$("#dniDifunto").change(function () {
+    var _dni = $("#dniDifunto").val();
+    $.ajax({
+        type: "POST",
+        url: "Difunto/BuscarPorDNI",
+        data: { dni: _dni },
+        dataType: "json",
+        success: function (data) {
+            if (data.estado) {
+                if (data.tipo === 0) {
+                    $("#apePaterno").prop('readonly', false);
+                    $("#apeMaterno").prop('readonly', false);
+                    $("#nombreDifunto").prop('readonly', false);
+                } else {
+                    $("#apePaterno").prop('readonly', true);
+                    $("#apeMaterno").prop('readonly', true);
+                    $("#nombreDifunto").prop('readonly', true);
+                }
+                if (data.tipo === 1) {
+                    $("#apePaterno").val(data.datos[0].difS_APEPATERNO);
+                    $("#apeMaterno").val(data.datos[0].difS_APEMATERNO);
+                    $("#nombreDifunto").val(data.datos[0].difS_NOMBRES);
+                }
+            } else {
+                mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
+            }
+        },
+        error: function (error) {
+            mostrarMensaje("Error", "Codigo: " + error.status + " - " + error.responseText, 2, true);
+        }
+    });
+});

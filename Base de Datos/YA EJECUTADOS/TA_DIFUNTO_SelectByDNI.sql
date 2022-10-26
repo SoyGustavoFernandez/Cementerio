@@ -1,18 +1,21 @@
 USE [db_a74b52_cementerio]
 GO
-IF EXISTS (SELECT * FROM dbo.sysobjects where id = object_id(N'[dbo].[TA_DIFUNTO_SelectAll]') and ObjectProperty(id, N'IsProcedure') = 1)
-	DROP PROCEDURE [dbo].[TA_DIFUNTO_SelectAll]
+IF EXISTS (SELECT * FROM dbo.sysobjects where id = object_id(N'[dbo].[TA_DIFUNTO_SelectByDNI]') and ObjectProperty(id, N'IsProcedure') = 1)
+	DROP PROCEDURE [dbo].[TA_DIFUNTO_SelectByDNI]
 GO
 
 /******************************************************************************
-NOMBRE           : TA_DIFUNTO_SelectAll
-DESCRIPCIÓN      : Permite seleccionar todos los registros de la tabla TA_DIFUNTO
+NOMBRE           : TA_DIFUNTO_SelectByDNI
+DESCRIPCIÓN      : Permite seleccionar un registro de la tabla TA_DIFUNTO por su primary key
 FECHA CREACIÓN   : 11/09/2022
 CREADOR          : Gustavo Fernández 
 SINTAXIS         :  
-            TA_DIFUNTO_SelectAll
+            TA_DIFUNTO_SelectByDNI
 ******************************************************************************/
-CREATE PROCEDURE [dbo].[TA_DIFUNTO_SelectAll]
+CREATE PROCEDURE [dbo].[TA_DIFUNTO_SelectByDNI]
+(
+    	@DIFS_DNI VARCHAR(15)
+)
 
 AS
 BEGIN
@@ -32,7 +35,7 @@ BEGIN
     	    [DIFD_FECMODIFICA],
     	    [DIFB_ESTADO]
     FROM [TA_DIFUNTO]
-    WHERE  [DIFB_ESTADO] = 1
+    WHERE     [DIFS_DNI] = @DIFS_DNI AND [DIFB_ESTADO] = 1
 
 END
 

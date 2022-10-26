@@ -54,6 +54,11 @@
                 <input type="text" id="idNichoDifunto" hidden />
                 <input type="text" id="idDifunto" hidden />
                 <form class="row g-3 needs-validation" id="formDifunto" novalidate method="post">
+                    <div class="col-md-12">
+                        <label class="form-label">Número de Documento</label>
+                        <input type="text" class="form-control soloNumeros" id="dniDifunto" name="dniDifunto" required>
+                        <div class="invalid-feedback">Es un campo obligatorio</div>
+                    </div>
                     <div class="col-md-6">
                         <label class="form-label">Apellido Paterno</label>
                         <input type="text" class="form-control" id="apePaterno" name="apePaterno" required>

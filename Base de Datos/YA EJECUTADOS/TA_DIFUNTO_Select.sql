@@ -24,6 +24,7 @@ BEGIN
 
     SELECT     [DIFN_IDDIFUNTO],
     	    [DIFN_IDCEMENTERIO],
+			[DIFS_DNI],
     	    [DIFS_NOMBRES],
     	    [DIFS_APEPATERNO],
     	    [DIFS_APEMATERNO],

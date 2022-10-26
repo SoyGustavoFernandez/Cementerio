@@ -82,7 +82,14 @@ namespace SW.CEMENTERIO.BusinessLogicLayer
 			return new DAL_TA_NICHO_DIFUNTO().SelectAllByNICDIFN_IDNICHO(NICDIFN_IDNICHO);
 		}
 
-
+		/// <summary>
+		/// Selecciona una registro de la tabla TA_NICHO_DIFUNTO por su unique key.
+		/// </summary>
+		public ENT_TA_NICHO_DIFUNTO SelectByDNI(string DIFS_DNI)
+		{
+			return new DAL_TA_NICHO_DIFUNTO().SelectByDNI(DIFS_DNI);
+		}
+		
 		#endregion
 	}
 }

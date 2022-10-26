@@ -32,6 +32,7 @@ BEGIN
     	    ND.[NICDIFB_ESTADO],
 			D.[DIFN_IDDIFUNTO],
     	    D.[DIFN_IDCEMENTERIO],
+			D.[DIFS_DNI],
     	    D.[DIFS_NOMBRES],
     	    D.[DIFS_APEPATERNO],
     	    D.[DIFS_APEMATERNO],

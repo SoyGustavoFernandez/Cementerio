@@ -16,9 +16,10 @@ namespace SW.CEMENTERIO.EntityLayer
 		/// <summary>
 		/// Initializes a new instance of the ENT_TA_DIFUNTO class.
 		/// </summary>
-		public ENT_TA_DIFUNTO(int DIFN_IDCEMENTERIO, string DIFS_NOMBRES, string DIFS_APEPATERNO, string DIFS_APEMATERNO, DateTime DIFD_FECHADEFUNCION, string DIFS_USUREGISTRO, DateTime DIFD_FECREGISTRO, string DIFS_USUMODIFICA, DateTime DIFD_FECMODIFICA, bool DIFB_ESTADO)
+		public ENT_TA_DIFUNTO(int DIFN_IDCEMENTERIO, string DIFS_DNI, string DIFS_NOMBRES, string DIFS_APEPATERNO, string DIFS_APEMATERNO, DateTime DIFD_FECHADEFUNCION, string DIFS_USUREGISTRO, DateTime DIFD_FECREGISTRO, string DIFS_USUMODIFICA, DateTime DIFD_FECMODIFICA, bool DIFB_ESTADO)
 		{
 			this.DIFN_IDCEMENTERIO = DIFN_IDCEMENTERIO;
+			this.DIFS_DNI = DIFS_DNI;
 			this.DIFS_NOMBRES = DIFS_NOMBRES;
 			this.DIFS_APEPATERNO = DIFS_APEPATERNO;
 			this.DIFS_APEMATERNO = DIFS_APEMATERNO;
@@ -33,9 +34,10 @@ namespace SW.CEMENTERIO.EntityLayer
 		/// <summary>
 		/// Initializes a new instance of the ENT_TA_DIFUNTO class.
 		/// </summary>
-		public ENT_TA_DIFUNTO(int DIFN_IDDIFUNTO, int DIFN_IDCEMENTERIO, string DIFS_NOMBRES, string DIFS_APEPATERNO, string DIFS_APEMATERNO, DateTime DIFD_FECHADEFUNCION, string DIFS_USUREGISTRO, DateTime DIFD_FECREGISTRO, string DIFS_USUMODIFICA, DateTime DIFD_FECMODIFICA, bool DIFB_ESTADO)
+		public ENT_TA_DIFUNTO(int DIFN_IDDIFUNTO, int DIFN_IDCEMENTERIO, string DIFS_DNI, string DIFS_NOMBRES, string DIFS_APEPATERNO, string DIFS_APEMATERNO, DateTime DIFD_FECHADEFUNCION, string DIFS_USUREGISTRO, DateTime DIFD_FECREGISTRO, string DIFS_USUMODIFICA, DateTime DIFD_FECMODIFICA, bool DIFB_ESTADO)
 		{
 			this.DIFN_IDDIFUNTO = DIFN_IDDIFUNTO;
+			this.DIFS_DNI = DIFS_DNI;
 			this.DIFN_IDCEMENTERIO = DIFN_IDCEMENTERIO;
 			this.DIFS_NOMBRES = DIFS_NOMBRES;
 			this.DIFS_APEPATERNO = DIFS_APEPATERNO;
@@ -55,6 +57,11 @@ namespace SW.CEMENTERIO.EntityLayer
 		/// Gets or sets the DIFN_IDDIFUNTO value. 
 		/// </summary>
 		public int DIFN_IDDIFUNTO { get; set; }
+		
+		/// <summary>
+		/// Gets or sets the DIFN_IDDIFUNTO value. 
+		/// </summary>
+		public string DIFS_DNI { get; set; }
 
 		/// <summary>
 		/// Gets or sets the DIFN_IDCEMENTERIO value. 
