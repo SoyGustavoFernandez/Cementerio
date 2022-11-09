@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using SW.CEMENTERIO.BusinessLogicLayer;
@@ -6,6 +7,7 @@ using SW.CEMENTERIO.EntityLayer;
 using SW.CEMENTERIO.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -14,6 +16,12 @@ namespace SW.CEMENTERIO.Controllers
 {
     public class PabellonController : Controller
     {
+        private readonly IWebHostEnvironment _environment;
+
+        public PabellonController(IWebHostEnvironment environment)
+        {
+            _environment = environment;
+        }
 
         public IActionResult Index()
         {
@@ -63,7 +71,7 @@ namespace SW.CEMENTERIO.Controllers
         }
 
         [HttpPost]
-        public JsonResult Guardar(ENT_TA_PABELLON objPabellon)
+        public async Task<JsonResult> Guardar(ENT_TA_PABELLON objPabellon)
         {
             ResponseViewModel oResponse = new();
             try
@@ -71,11 +79,14 @@ namespace SW.CEMENTERIO.Controllers
                 BLL_TA_PABELLON pabellonLN = new BLL_TA_PABELLON();
                 if (objPabellon.PABN_IDPABELLON == 0)
                 {
-                    objPabellon.PABS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador");;
+                    objPabellon.PABS_UBICACION = await GuardarArchivoEnDisco(objPabellon.UBICACIONFILE, null);
+                    objPabellon.PABS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador"); ;
                     pabellonLN.Insert(objPabellon);
                 }
                 else
                 {
+                    ENT_TA_PABELLON objPabellonTMP = pabellonLN.Select(objPabellon.PABN_IDPABELLON);
+                    objPabellon.PABS_UBICACION = await GuardarArchivoEnDisco(objPabellon.UBICACIONFILE, objPabellonTMP.PABS_UBICACION);
                     objPabellon.PABS_USUMODIFICA = HttpContext.Session.GetString("idTrabajador");
                     objPabellon.PABD_FECMODIFICA = DateTime.Now;
                     pabellonLN.Update(objPabellon);
@@ -191,7 +202,7 @@ namespace SW.CEMENTERIO.Controllers
                 oResponse.Titulo = "Éxito";
                 oResponse.Mensaje = "Archivo cargado correctamente";
                 oResponse.Tipo = 1;
-                scope.Complete(); 
+                scope.Complete();
                 scope.Dispose();
                 return Json(oResponse); ;
             }
@@ -203,6 +214,41 @@ namespace SW.CEMENTERIO.Controllers
                 oResponse.Mensaje = e.Message;
                 return Json(oResponse);
             }
+        }
+
+        public async Task<string> GuardarArchivoEnDisco(IFormFile upload, string ArchivoAnterior)
+        {
+            string RutaFinal = "";
+            try
+            {
+                //Validar si no existe directorio
+                if (!Directory.Exists(Path.Combine(_environment.ContentRootPath, "Pabellones")))
+                    Directory.CreateDirectory(Path.Combine(_environment.ContentRootPath, "Pabellones"));
+                else
+                {
+                    //Validar si existe archivo
+                    if (string.IsNullOrEmpty(ArchivoAnterior))
+                    {
+                        var filename = Path.Combine(_environment.ContentRootPath, "Pabellones", upload.FileName);
+                        RutaFinal = filename;
+                        await upload.CopyToAsync(new FileStream(filename, FileMode.Create));
+                    }
+                    else
+                    {
+                            var filename = Path.Combine(_environment.ContentRootPath, "Pabellones", upload.FileName);
+                            RutaFinal = filename;
+                            await upload.CopyToAsync(new FileStream(filename, FileMode.Create));
+
+                        if (System.IO.File.Exists(ArchivoAnterior))
+                            System.IO.File.Delete(ArchivoAnterior);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return RutaFinal;
         }
     }
 }

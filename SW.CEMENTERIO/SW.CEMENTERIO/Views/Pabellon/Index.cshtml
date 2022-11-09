@@ -88,14 +88,18 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-check mb-3">
-                            <input type="radio" class="form-check-input" id="rbnPabellon" name="rbPabellon" valor="1" required >
-                            <label class="form-check-label" for="rbnPabellon">Pabellón</label>                        
-                        </div>                                                                                       
-                        <div class="form-check mb-3">                                                                
-                            <input type="radio" class="form-check-input" id="rbnMausoleo" name="rbPabellon" valor="2" required >
+                            <input type="radio" class="form-check-input" id="rbnPabellon" name="rbPabellon" valor="1" required>
+                            <label class="form-check-label" for="rbnPabellon">Pabellón</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="radio" class="form-check-input" id="rbnMausoleo" name="rbPabellon" valor="2" required>
                             <label class="form-check-label" for="rbnMausoleo">Mausoleo</label>
                             <div class="invalid-feedback">Es un campo obligatorio</div>
                         </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="formFile" class="form-label">Croquis</label>
+                        <input class="form-control" type="file" id="filePabellon">
                     </div>
                     <div class="col-md-12" id="tablaAdicional">
                         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
@@ -155,6 +159,28 @@
                         <button class="btn btn-primary" type="button" onclick="addNicho()" id="btnAddNicho"></button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCroquis" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lblmodalCroquis"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12 col-lg-8 col-xl-9">
+                    <div class="card overflow-hidden radius-10">
+                        <div class="card-body">
+                            <div class="mt-5 d-flex align-items-start justify-content-between">
+                                <img id="imgCroquis" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

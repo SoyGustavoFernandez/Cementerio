@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using System;
 
 namespace SW.CEMENTERIO.EntityLayer
@@ -98,6 +99,11 @@ namespace SW.CEMENTERIO.EntityLayer
 		/// Gets or sets the PABB_ESTADO value. 
 		/// </summary>
 		public bool PABB_ESTADO { get; set; }
+
+		/// <summary>
+		/// Gets or sets the UBICACION value. 
+		/// </summary>
+		public IFormFile UBICACIONFILE { get; set; }
 
 		#endregion
 	}

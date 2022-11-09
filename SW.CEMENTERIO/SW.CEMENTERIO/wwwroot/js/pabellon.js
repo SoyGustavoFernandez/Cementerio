@@ -31,8 +31,8 @@ function buscar() {
                 targets: 2,
                 data: 'pabS_UBICACION',
                 className: "text-center",
-                render: function (data) {
-                    return "MÁS ADELANTE";
+                render: function (data, obj, full) {
+                    return (es_vacio(data)) ? "-" : `<button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="verCroquis(` + full.pabN_IDPABELLON + `)"><i class="lni lni-eye"></i></button>`;
                 }
             },
             {
@@ -57,21 +57,24 @@ function addPabellon() {
     let _id = $("#idPabellon").val();
     let _nombre = $("#nombrePabellon").val();
     let _tipo = $('input[name="rbPabellon"]:checked').attr("valor");
+    let _ubicacion = $("#filePabellon").get(0).files[0];
     if (!$("#nombrePabellon").get(0).checkValidity() || !$('[name="rbPabellon"]').get(0).checkValidity()) {
         $("#formPabellon").addClass('was-validated');
     } else {
-    let objPabellon = {
-        PABN_IDPABELLON: _id,
-        PABN_IDCEMENTERIO: 1,
-        PABS_NOMBRE: _nombre,
-        PABS_TIPO: _tipo,
-        PABS_UBICACION: "",
-    }
+        var formData = new FormData();
+        formData.append("PABN_IDPABELLON", _id);
+        formData.append("PABN_IDCEMENTERIO", 1);
+        formData.append("PABS_NOMBRE", _nombre);
+        formData.append("PABS_TIPO", _tipo);
+        formData.append("PABS_UBICACION", "");
+        formData.append("UBICACIONFILE", _ubicacion);
     $.ajax({
         type: "POST",
         url: "Pabellon/Guardar",
-        data: objPabellon,
-        dataType: "json",
+        datatype: "json",
+        contentType: false,
+        processData: false,
+        data: formData,
         success: function (data) {
             if (data.estado) {
                 buscar();
@@ -324,4 +327,25 @@ function CargaMasivaPabellon() {
         }
     });
     $("#modalCargaMasiva").modal("hide");
+}
+
+function verCroquis(id) {
+    $.ajax({
+        type: "POST",
+        url: "Pabellon/Buscar",
+        data: { idPabellon: id },
+        dataType: 'json',
+        success: function (data) {
+            if (data.estado) {
+                $("#lblmodalCroquis").html(data.datos[0].pabS_NOMBRE);
+                $("#imgCroquis").attr('src', data.datos[0].pabS_UBICACION)
+            } else {
+                mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
+            }
+        },
+        error: function (error) {
+            mostrarMensaje("Error", "Codigo: " + error.status + " - " + error.responseText, 2, true);
+        }
+    });
+    $("#modalCroquis").modal("show");
 }

@@ -60,6 +60,7 @@ function detalleDifunto(_id) {
                 $("#fecDefuncionCard").html("<ion-icon name=\"compass-sharp\" class=\"me-2\"></ion-icon> " + moment(data.datos[0].difD_FECHADEFUNCION).format('DD/MM/YYYY'));
                 $("#nombrePabellonCard").html("<ion-icon name=\"compass-sharp\" class=\"me-2\"></ion-icon> " + data.datos[0].pabS_NOMBRE);
                 $("#nombreNichoCard").html("<ion-icon name=\"compass-sharp\" class=\"me-2\"></ion-icon> " + data.datos[0].nicS_CODNICHO);
+                $("#imgPabellon").attr('src', data.datos[0].pabS_UBICACION)
             } else {
                 mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
             }
