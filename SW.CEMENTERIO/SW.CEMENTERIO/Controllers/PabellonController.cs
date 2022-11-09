@@ -230,14 +230,14 @@ namespace SW.CEMENTERIO.Controllers
                     if (string.IsNullOrEmpty(ArchivoAnterior))
                     {
                         var filename = Path.Combine(_environment.ContentRootPath, "Pabellones", upload.FileName);
-                        RutaFinal = filename;
+                        RutaFinal = "http://127.0.0.1:8887/" + upload.FileName;
                         await upload.CopyToAsync(new FileStream(filename, FileMode.Create));
                     }
                     else
                     {
-                            var filename = Path.Combine(_environment.ContentRootPath, "Pabellones", upload.FileName);
-                            RutaFinal = filename;
-                            await upload.CopyToAsync(new FileStream(filename, FileMode.Create));
+                        var filename = Path.Combine(_environment.ContentRootPath, "Pabellones", upload.FileName);
+                        RutaFinal = "http://127.0.0.1:8887/" + upload.FileName;
+                        await upload.CopyToAsync(new FileStream(filename, FileMode.Create));
 
                         if (System.IO.File.Exists(ArchivoAnterior))
                             System.IO.File.Delete(ArchivoAnterior);

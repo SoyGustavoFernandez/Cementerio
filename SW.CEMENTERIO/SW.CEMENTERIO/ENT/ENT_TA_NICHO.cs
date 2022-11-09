@@ -64,7 +64,7 @@ namespace SW.CEMENTERIO.EntityLayer
 		/// <summary>
 		/// Gets or sets the NICB_ESTADONICHO value. 
 		/// </summary>
-		public int NICB_ESTADONICHO { get; set; }
+		public int NICB_ESTADONICHO { get; set; }		//1: LIBRE		2: ESPACIOS DISPONIBLES		3: OCUPADO
 
 		/// <summary>
 		/// Gets or sets the NICB_NUMDIFTOTAL value. 

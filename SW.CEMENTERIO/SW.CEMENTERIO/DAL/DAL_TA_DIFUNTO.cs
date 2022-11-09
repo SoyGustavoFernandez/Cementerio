@@ -55,7 +55,7 @@ namespace SW.CEMENTERIO.DataAccessLayer
 				parameters = new SqlParameter[]
 				{
 					new SqlParameter("@DIFN_IDDIFUNTO", x_oENT_TA_DIFUNTO.DIFN_IDDIFUNTO),
-					new SqlParameter("@@DIFS_DNI", x_oENT_TA_DIFUNTO.@DIFS_DNI),
+					new SqlParameter("@DIFS_DNI", x_oENT_TA_DIFUNTO.@DIFS_DNI),
 					new SqlParameter("@DIFN_IDCEMENTERIO", x_oENT_TA_DIFUNTO.DIFN_IDCEMENTERIO),
 					new SqlParameter("@DIFS_NOMBRES", x_oENT_TA_DIFUNTO.DIFS_NOMBRES),
 					new SqlParameter("@DIFS_APEPATERNO", x_oENT_TA_DIFUNTO.DIFS_APEPATERNO),

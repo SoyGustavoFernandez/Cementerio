@@ -187,7 +187,19 @@ function buscar_detalle(_id, _async = true) {
                 targets: 1,
                 data: 'nicB_ESTADONICHO',
                 render: function (data) {
-                    return (data === 1) ? "LIBRE" : "VENDIDO";
+                    let _estado = "";
+                    switch (data) {
+                        case 1:
+                            _estado = "LIBRE";
+                            break;
+                        case 2:
+                            _estado = "ESPACIOS DISPONIBLES";
+                            break;
+                        case 3:
+                            _estado = "OCUPADO";
+                            break;
+                    }
+                    return _estado;
                 }
             },
             {
