@@ -1,34 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Archivos\\UTP\\VIII CICLO\\INTEGRADOR I\\GIT\\Cementerio\\SW.CEMENTERIO\\SW.CEMENTERIO\\SW.CEMENTERIO.csproj": {}
+    "D:\\Archivos\\UTP\\INTEGRADOR\\SISTEMA\\Cementerio\\SW.CEMENTERIO\\SW.CEMENTERIO\\SW.CEMENTERIO.csproj": {}
   },
   "projects": {
-    "D:\\Archivos\\UTP\\VIII CICLO\\INTEGRADOR I\\GIT\\Cementerio\\SW.CEMENTERIO\\SW.CEMENTERIO\\SW.CEMENTERIO.csproj": {
+    "D:\\Archivos\\UTP\\INTEGRADOR\\SISTEMA\\Cementerio\\SW.CEMENTERIO\\SW.CEMENTERIO\\SW.CEMENTERIO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Archivos\\UTP\\VIII CICLO\\INTEGRADOR I\\GIT\\Cementerio\\SW.CEMENTERIO\\SW.CEMENTERIO\\SW.CEMENTERIO.csproj",
+        "projectUniqueName": "D:\\Archivos\\UTP\\INTEGRADOR\\SISTEMA\\Cementerio\\SW.CEMENTERIO\\SW.CEMENTERIO\\SW.CEMENTERIO.csproj",
         "projectName": "SW.CEMENTERIO",
-        "projectPath": "D:\\Archivos\\UTP\\VIII CICLO\\INTEGRADOR I\\GIT\\Cementerio\\SW.CEMENTERIO\\SW.CEMENTERIO\\SW.CEMENTERIO.csproj",
-        "packagesPath": "C:\\Users\\Xside\\.nuget\\packages\\",
-        "outputPath": "D:\\Archivos\\UTP\\VIII CICLO\\INTEGRADOR I\\GIT\\Cementerio\\SW.CEMENTERIO\\SW.CEMENTERIO\\obj\\",
+        "projectPath": "D:\\Archivos\\UTP\\INTEGRADOR\\SISTEMA\\Cementerio\\SW.CEMENTERIO\\SW.CEMENTERIO\\SW.CEMENTERIO.csproj",
+        "packagesPath": "C:\\Users\\aaa18\\.nuget\\packages\\",
+        "outputPath": "D:\\Archivos\\UTP\\INTEGRADOR\\SISTEMA\\Cementerio\\SW.CEMENTERIO\\SW.CEMENTERIO\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Xside\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\aaa18\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.telerik.com/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -101,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

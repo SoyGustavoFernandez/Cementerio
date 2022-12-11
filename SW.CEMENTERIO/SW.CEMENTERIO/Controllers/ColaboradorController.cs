@@ -134,7 +134,7 @@ namespace SW.CEMENTERIO.Controllers
         }
 
         [HttpPost]
-        public JsonResult EnvioClave(string idColaborador, string asunto = "Recuperación de Contraseña", bool isReset = false)
+        public JsonResult EnvioClave(string idColaborador, string asunto = "Recuperación de Contraseña", bool isReset = false, bool envioCorreo = true)
         {
             ResponseViewModel oResponse = new();
             try
@@ -142,7 +142,10 @@ namespace SW.CEMENTERIO.Controllers
                 ENT_TA_LOGIN modelo = new ENT_TA_LOGIN();
                 BLL_TA_LOGIN bllLogin = new BLL_TA_LOGIN();
                 if (isReset)
+                    if(envioCorreo)
                     modelo = bllLogin.SelectAllByCOLS_CORREO(idColaborador);
+                    else
+                        modelo = bllLogin.SelectAllByLOGN_IDCOLABORADOR(Convert.ToInt32(idColaborador)).FirstOrDefault();
                 else
                     modelo = bllLogin.SelectAllByLOGN_IDCOLABORADOR(Convert.ToInt32(idColaborador)).FirstOrDefault();
             

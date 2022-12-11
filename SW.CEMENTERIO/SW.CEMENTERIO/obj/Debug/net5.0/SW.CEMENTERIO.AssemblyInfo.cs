@@ -11,6 +11,7 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("0fcdf124-0eda-4bfe-a2e4-25b44fec7b62")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("SW.CEMENTERIO")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]

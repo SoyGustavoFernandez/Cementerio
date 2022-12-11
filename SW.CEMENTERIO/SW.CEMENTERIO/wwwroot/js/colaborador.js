@@ -147,7 +147,7 @@ function reenviarCorreo(id) {
     $.ajax({
         type: "POST",
         url: "Colaborador/EnvioClave",
-        data: { idColaborador: id, asunto: null, isReset: true },
+        data: { idColaborador: id, asunto: null, isReset: true, envioCorreo: false },
         dataType: 'json',
         success: function (data) {
             mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
@@ -155,5 +155,6 @@ function reenviarCorreo(id) {
         error: function (error) {
             mostrarMensaje("Error", "Codigo: " + error.status + " - " + error.responseText, 2, true);
         }
+
     });
 }
