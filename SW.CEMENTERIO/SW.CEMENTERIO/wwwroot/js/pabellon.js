@@ -40,8 +40,8 @@ function buscar() {
                 data: 'pabN_IDPABELLON',
                 orderable: false,
                 width: "20%",
-                render: function (data) {
-                    return `<button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="verPabellon(` + data + `)"><i class="fadeIn animated bx bx-pencil"></i></button>
+                render: function (data, obj, full) {
+                    return (!full.pabB_ESTADO) ? `<button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="verPabellon(` + data +','+ true + `)"><i class="lni lni-eye"></i></button>` : `<button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="verPabellon(` + data + `)"><i class="fadeIn animated bx bx-pencil"></i></button>
                             <button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="eliminarPabellon(` + data + `)"><i class="fadeIn animated bx bx-trash-alt"></i></button>`;
                 }
             }
@@ -49,7 +49,12 @@ function buscar() {
         language: translateDatatable,
         initComplete: function (settings, oResponse) {
             $("#totalPabellon").html(oResponse.datos.length)
-        }
+        },
+        fnRowCallback: function (nRow, aData, iDisplayIndex) {
+            if (!aData.pabB_ESTADO) {
+                $(nRow).addClass('bg-warning');
+            }
+        },
     });
 }
 
@@ -100,16 +105,25 @@ function eliminarPabellon(id) {
         title: 'ELIMINAR PABELLON',
         text: "¿Está seguro que quiere eliminar el Pabellón actual?",
         type: 'warning',
+        input: 'textarea',
+        inputAttributes: {
+            autocapitalize: 'off',
+            placeholder: 'Motivo de la baja del pabellón.',
+            required: 'true'
+        },
         showCancelButton: true,
         confirmButtonText: '¡Eliminar!',
         cancelButtonText: '¡Cancelar!',
-        reverseButtons: true
-    }).then(function (result) {
-        if (result.value) {
+        reverseButtons: true,
+        preConfirm: (motivo) => {
+            const _oPabellon = {
+                PABN_IDPABELLON: id,
+                PABB_ESTADOBAJA: motivo
+            };
             $.ajax({
                 type: "DELETE",
                 url: "Pabellon/Eliminar",
-                data: { idPabellon: id },
+                data: { oPabellon: _oPabellon },
                 dataType: 'json',
                 success: function (data) {
                     if (data.estado)
@@ -120,26 +134,51 @@ function eliminarPabellon(id) {
                     mostrarMensaje("Error", "Codigo: " + error.status + " - " + error.responseText, 2, true);
                 }
             });
-        }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
     });
 }
 
-function verPabellon(id) {
+function verPabellon(id, _estatus) {
     limpiarDatos();
     if (es_vacio(id)) {
         $("#lblModalPabellon").html("AÑADIR NUEVO PABELLÓN");
         $("#idPabellon").val("");
         $("#btnAddPabellon").html("Registrar");
         $("#classModalPabellon").removeClass("modal-lg");
+        $("#nombrePabellon").removeAttr("disabled");
+        $("#rbnPabellon").removeAttr("disabled");
+        $("#rbnMausoleo").removeAttr("disabled");
+        $("#filePabellon").removeAttr("disabled");
+        $("#nuevoNicho").removeAttr("disabled");
+        $("#btnAddPabellon").show();
     }
     else {
-        $("#btnAddPabellon").html("Actualizar");
+        if (_estatus) {
+            $("#btnAddPabellon").hide();
+                
+            $("#nombrePabellon").attr("disabled","disabled");
+            $("#rbnPabellon").attr("disabled","disabled");
+            $("#rbnMausoleo").attr("disabled","disabled");
+            $("#filePabellon").attr("disabled","disabled");
+            $("#nuevoNicho").attr("disabled","disabled");
+        } else {
+            $("#nombrePabellon").removeAttr("disabled");
+            $("#rbnPabellon").removeAttr("disabled");
+            $("#rbnMausoleo").removeAttr("disabled");
+            $("#filePabellon").removeAttr("disabled");
+            $("#nuevoNicho").removeAttr("disabled");
+
+            $("#btnAddPabellon").show();
+            $("#btnAddPabellon").html("Actualizar");
+        }
         $.ajax({
             type: "POST",
             url: "Pabellon/Buscar",
             data: { idPabellon: id },
             dataType: 'json',
             success: function (data) {
+                debugger;
                 if (data.estado) {
                     $("#idPabellon").val(data.datos[0].pabN_IDPABELLON);
                     $("#nombrePabellon").val(data.datos[0].pabS_NOMBRE);
@@ -148,7 +187,11 @@ function verPabellon(id) {
                     } else if(data.datos[0].pabS_TIPO === 2) {
                         $("#rbnMausoleo").prop("checked", true);
                     }
-                    $("#lblModalPabellon").html(data.datos[0].pabS_NOMBRE);
+                    if (_estatus) {
+                        $("#lblModalPabellon").html(data.datos[0].pabS_NOMBRE + " - " + data.datos[0].pabB_ESTADOBAJA);
+                    } else {
+                        $("#lblModalPabellon").html(data.datos[0].pabS_NOMBRE);
+                    }
                     if (bus_det) {
                         $("#tablaAdicional").show();
                         buscar_detalle(data.datos[0].pabN_IDPABELLON);

@@ -14,7 +14,8 @@ SINTAXIS         :
 ******************************************************************************/
 CREATE PROCEDURE [dbo].[TA_PABELLON_Delete]
 (
-    	@PABN_IDPABELLON INT
+    	@PABN_IDPABELLON INT,
+		@PABB_ESTADOBAJA VARCHAR(MAX)
 )
 
 AS
@@ -23,7 +24,8 @@ BEGIN
     SET NOCOUNT ON
 
     UPDATE [TA_PABELLON]
-    SET     [PABB_ESTADO] = 0
+    SET     [PABB_ESTADO] = 0,
+			[PABB_ESTADOBAJA] = @PABB_ESTADOBAJA
     WHERE    [PABN_IDPABELLON] = @PABN_IDPABELLON
 
 END

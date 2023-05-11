@@ -109,7 +109,7 @@ namespace SW.CEMENTERIO.Controllers
         }
 
         [HttpDelete]
-        public JsonResult Eliminar(int idPabellon)
+        public JsonResult Eliminar(ENT_TA_PABELLON oPabellon)
         {
             ResponseViewModel oResponse = new();
             try
@@ -117,7 +117,7 @@ namespace SW.CEMENTERIO.Controllers
                 TransactionScope scope = new TransactionScope();
                 List<ENT_TA_NICHO> lstNichos = new List<ENT_TA_NICHO>();
                 BLL_TA_NICHO NichoLN = new BLL_TA_NICHO();
-                lstNichos = NichoLN.SelectAllByNICN_IDPABELLON(idPabellon);
+                lstNichos = NichoLN.SelectAllByNICN_IDPABELLON(oPabellon.PABN_IDPABELLON);
 
                 if (lstNichos.Count > 0)
                 {
@@ -127,7 +127,7 @@ namespace SW.CEMENTERIO.Controllers
                 }
 
                 BLL_TA_PABELLON pabellonLN = new BLL_TA_PABELLON();
-                pabellonLN.Delete(idPabellon);
+                pabellonLN.Delete(oPabellon.PABN_IDPABELLON, oPabellon.PABB_ESTADOBAJA);
                 oResponse.Estado = true;
                 oResponse.Titulo = "Éxito";
                 oResponse.Mensaje = "Pabellón eliminado correctamente";

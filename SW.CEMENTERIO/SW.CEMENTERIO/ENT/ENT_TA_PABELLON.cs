@@ -17,7 +17,7 @@ namespace SW.CEMENTERIO.EntityLayer
 		/// <summary>
 		/// Initializes a new instance of the ENT_TA_PABELLON class.
 		/// </summary>
-		public ENT_TA_PABELLON(int PABN_IDCEMENTERIO, string PABS_NOMBRE, int PABS_TIPO, string PABS_UBICACION, string PABS_USUREGISTRO, DateTime PABD_FECREGISTRO, string PABS_USUMODIFICA, DateTime PABD_FECMODIFICA, bool PABB_ESTADO)
+		public ENT_TA_PABELLON(int PABN_IDCEMENTERIO, string PABS_NOMBRE, int PABS_TIPO, string PABS_UBICACION, string PABS_USUREGISTRO, DateTime PABD_FECREGISTRO, string PABS_USUMODIFICA, DateTime PABD_FECMODIFICA, bool PABB_ESTADO, string PABB_ESTADOBAJA)
 		{
 			this.PABN_IDCEMENTERIO = PABN_IDCEMENTERIO;
 			this.PABS_NOMBRE = PABS_NOMBRE;
@@ -28,12 +28,14 @@ namespace SW.CEMENTERIO.EntityLayer
 			this.PABS_USUMODIFICA = PABS_USUMODIFICA;
 			this.PABD_FECMODIFICA = PABD_FECMODIFICA;
 			this.PABB_ESTADO = PABB_ESTADO;
-		}
+			this.PABB_ESTADOBAJA = PABB_ESTADOBAJA;
+
+        }
 
 		/// <summary>
 		/// Initializes a new instance of the ENT_TA_PABELLON class.
 		/// </summary>
-		public ENT_TA_PABELLON(int PABN_IDPABELLON, int PABN_IDCEMENTERIO, string PABS_NOMBRE, int PABS_TIPO, string PABS_UBICACION, string PABS_USUREGISTRO, DateTime PABD_FECREGISTRO, string PABS_USUMODIFICA, DateTime PABD_FECMODIFICA, bool PABB_ESTADO)
+		public ENT_TA_PABELLON(int PABN_IDPABELLON, int PABN_IDCEMENTERIO, string PABS_NOMBRE, int PABS_TIPO, string PABS_UBICACION, string PABS_USUREGISTRO, DateTime PABD_FECREGISTRO, string PABS_USUMODIFICA, DateTime PABD_FECMODIFICA, bool PABB_ESTADO, string PABB_ESTADOBAJA)
 		{
 			this.PABN_IDPABELLON = PABN_IDPABELLON;
 			this.PABN_IDCEMENTERIO = PABN_IDCEMENTERIO;
@@ -45,15 +47,16 @@ namespace SW.CEMENTERIO.EntityLayer
 			this.PABS_USUMODIFICA = PABS_USUMODIFICA;
 			this.PABD_FECMODIFICA = PABD_FECMODIFICA;
 			this.PABB_ESTADO = PABB_ESTADO;
-		}
+			this.PABB_ESTADOBAJA = PABB_ESTADOBAJA;
+        }
 
-		#endregion
+        #endregion
 
-		#region Properties
-		/// <summary>
-		/// Gets or sets the PABN_IDPABELLON value. 
-		/// </summary>
-		public int PABN_IDPABELLON { get; set; }
+        #region Properties
+        /// <summary>
+        /// Gets or sets the PABN_IDPABELLON value. 
+        /// </summary>
+        public int PABN_IDPABELLON { get; set; }
 
 		/// <summary>
 		/// Gets or sets the PABN_IDCEMENTERIO value. 
@@ -100,11 +103,16 @@ namespace SW.CEMENTERIO.EntityLayer
 		/// </summary>
 		public bool PABB_ESTADO { get; set; }
 
-		/// <summary>
-		/// Gets or sets the UBICACION value. 
-		/// </summary>
-		public IFormFile UBICACIONFILE { get; set; }
+        /// <summary>
+        /// Gets or sets the PABB_ESTADOBAJA value. 
+        /// </summary>
+        public string PABB_ESTADOBAJA { get; set; }
 
-		#endregion
-	}
+        /// <summary>
+        /// Gets or sets the UBICACION value. 
+        /// </summary>
+        public IFormFile UBICACIONFILE { get; set; }
+        
+        #endregion
+    }
 }

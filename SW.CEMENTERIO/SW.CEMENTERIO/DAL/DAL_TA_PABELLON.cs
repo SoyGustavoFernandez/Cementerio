@@ -78,13 +78,14 @@ namespace SW.CEMENTERIO.DataAccessLayer
 		/// <summary>
 		/// Elimina un registro de la tabla TA_PABELLON por su primary key.
 		/// </summary>
-		public void Delete(int PABN_IDPABELLON)
+		public void Delete(int PABN_IDPABELLON, string PABB_ESTADOBAJA)
 		{
 			SqlParameter[] parameters = null;
 			try{
 				parameters = new SqlParameter[]
 				{
-					new SqlParameter("@PABN_IDPABELLON", PABN_IDPABELLON)
+					new SqlParameter("@PABN_IDPABELLON", PABN_IDPABELLON),
+					new SqlParameter("@PABB_ESTADOBAJA", PABB_ESTADOBAJA)
 				};
 			}
 			catch (Exception ex)

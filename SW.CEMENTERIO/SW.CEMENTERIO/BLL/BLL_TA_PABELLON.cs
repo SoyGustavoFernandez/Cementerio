@@ -29,9 +29,9 @@ namespace SW.CEMENTERIO.BusinessLogicLayer
 		/// <summary>
 		/// Elimina un registro de la tabla TA_PABELLON por su primary key.
 		/// </summary>
-		public void Delete(int PABN_IDPABELLON)
+		public void Delete(int PABN_IDPABELLON, string PABB_ESTADOBAJA)
 		{
-			 new DAL_TA_PABELLON().Delete(PABN_IDPABELLON);
+			 new DAL_TA_PABELLON().Delete(PABN_IDPABELLON, PABB_ESTADOBAJA);
 		}
 
 		/// <summary>
