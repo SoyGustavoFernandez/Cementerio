@@ -20,8 +20,8 @@ function Login() {
             if (data.estado) {
                 sessionStorage.setItem("nombreUsuario", data.adicionalTxt);
                 //TODO: AvanceSemana8
-                //window.location.href = "../Difunto";
-                window.location.href = "../Dashboard";
+                window.location.href = "../Difunto";
+                //window.location.href = "../Dashboard";
             } else {
                 mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
                 return false;
