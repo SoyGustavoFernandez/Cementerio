@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.ApplicationBlocks.Data;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using OfficeOpenXml;
 using SW.CEMENTERIO.BusinessLogicLayer;
 using SW.CEMENTERIO.EntityLayer;
 using SW.CEMENTERIO.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +20,7 @@ namespace SW.CEMENTERIO.Controllers
     public class PabellonController : Controller
     {
         private readonly IWebHostEnvironment _environment;
+        private readonly DAL_Execute _objExecute = new DAL_Execute();
 
         public PabellonController(IWebHostEnvironment environment)
         {
@@ -60,12 +64,36 @@ namespace SW.CEMENTERIO.Controllers
                     return Json(oResponse);
                 }
             }
-            catch (Exception e)
+            catch (TimeoutException)
             {
                 oResponse.Tipo = 2;
                 oResponse.Estado = false;
                 oResponse.Titulo = "Error";
-                oResponse.Mensaje = e.Message;
+                oResponse.Mensaje = "Tiempo de espera superado. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (SqlException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en Base de Datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (DbException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en conexión a base de datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (Exception)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error al momento de buscar un Pabellón. Consulte al administrador del sistema";
                 return Json(oResponse);
             }
         }
@@ -79,7 +107,7 @@ namespace SW.CEMENTERIO.Controllers
                 BLL_TA_PABELLON pabellonLN = new BLL_TA_PABELLON();
                 if (objPabellon.PABN_IDPABELLON == 0)
                 {
-                    objPabellon.PABS_UBICACION = await GuardarArchivoEnDisco(objPabellon.UBICACIONFILE, null);
+                    objPabellon.PABS_UBICACION = "";// await GuardarArchivoEnDisco(objPabellon.UBICACIONFILE, null);
                     objPabellon.PABS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador"); ;
                     pabellonLN.Insert(objPabellon);
                 }
@@ -98,12 +126,36 @@ namespace SW.CEMENTERIO.Controllers
                 oResponse.Tipo = 1;
                 return Json(oResponse); ;
             }
-            catch (Exception e)
+            catch (TimeoutException)
             {
                 oResponse.Tipo = 2;
                 oResponse.Estado = false;
                 oResponse.Titulo = "Error";
-                oResponse.Mensaje = e.Message;
+                oResponse.Mensaje = "Tiempo de espera superado. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (SqlException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en Base de Datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (DbException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en conexión a base de datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (Exception)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error al momento de " + (objPabellon.PABN_IDPABELLON == 0 ? "registrar" : "actualizar") + " un Pabellón. Consulte al administrador del sistema";
                 return Json(oResponse);
             }
         }
@@ -136,12 +188,36 @@ namespace SW.CEMENTERIO.Controllers
                 scope.Dispose();
                 return Json(oResponse); ;
             }
-            catch (Exception e)
+            catch (TimeoutException)
             {
                 oResponse.Tipo = 2;
                 oResponse.Estado = false;
                 oResponse.Titulo = "Error";
-                oResponse.Mensaje = e.Message;
+                oResponse.Mensaje = "Tiempo de espera superado. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (SqlException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en Base de Datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (DbException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en conexión a base de datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (Exception)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error al momento de eliminar un Pabellón. Consulte al administrador del sistema";
                 return Json(oResponse);
             }
         }
@@ -206,12 +282,36 @@ namespace SW.CEMENTERIO.Controllers
                 scope.Dispose();
                 return Json(oResponse); ;
             }
-            catch (Exception e)
+            catch (TimeoutException)
             {
                 oResponse.Tipo = 2;
                 oResponse.Estado = false;
                 oResponse.Titulo = "Error";
-                oResponse.Mensaje = e.Message;
+                oResponse.Mensaje = "Tiempo de espera superado. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (SqlException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en Base de Datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (DbException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en conexión a base de datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (Exception)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en la carga masiva. Consulte al administrador del sistema";
                 return Json(oResponse);
             }
         }
@@ -246,7 +346,7 @@ namespace SW.CEMENTERIO.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                _objExecute.controlarExcepcion("Error en Base de Datos, contactar al Administrador", e);
             }
             return RutaFinal;
         }

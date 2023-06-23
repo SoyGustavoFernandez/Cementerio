@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.ApplicationBlocks.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SW.CEMENTERIO.BusinessLogicLayer;
 using SW.CEMENTERIO.EntityLayer;
 using SW.CEMENTERIO.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -13,6 +16,8 @@ namespace SW.CEMENTERIO.Controllers
 {
     public class NichoController : Controller
     {
+        private readonly DAL_Execute _objExecute = new DAL_Execute();
+
         public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("idUsuario") != null)
@@ -50,13 +55,37 @@ namespace SW.CEMENTERIO.Controllers
                     return Json(oResponse);
                 }
             }
-            catch (Exception e)
+            catch (TimeoutException)
             {
                 oResponse.Tipo = 2;
                 oResponse.Estado = false;
                 oResponse.Titulo = "Error";
-                oResponse.Mensaje = e.Message;
+                oResponse.Mensaje = "Tiempo de espera superado. Consulte al administrador del sistema";
                 return Json(oResponse);
+            }
+            catch (SqlException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en Base de Datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (DbException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en conexión a base de datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (Exception)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error al momento de buscar un Nicho. Consulte al administrador del sistema";
+                return Json(oResponse); 
             }
         }
 
@@ -87,12 +116,36 @@ namespace SW.CEMENTERIO.Controllers
                     return Json(oResponse);
                 }
             }
-            catch (Exception e)
+            catch (TimeoutException)
             {
                 oResponse.Tipo = 2;
                 oResponse.Estado = false;
                 oResponse.Titulo = "Error";
-                oResponse.Mensaje = e.Message;
+                oResponse.Mensaje = "Tiempo de espera superado. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (SqlException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en Base de Datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (DbException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en conexión a base de datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (Exception)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error al momento de buscar pabellón según el Nicho enviado. Consulte al administrador del sistema";
                 return Json(oResponse);
             }
         }
@@ -128,12 +181,36 @@ namespace SW.CEMENTERIO.Controllers
                 scope.Dispose();
                 return Json(oResponse); ;
             }
-            catch (Exception e)
+            catch (TimeoutException)
             {
                 oResponse.Tipo = 2;
                 oResponse.Estado = false;
                 oResponse.Titulo = "Error";
-                oResponse.Mensaje = e.Message;
+                oResponse.Mensaje = "Tiempo de espera superado. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (SqlException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en Base de Datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (DbException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en conexión a base de datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (Exception)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error al momento de " + (objNicho.NICN_IDNICHO == 0 ? "registrar" : "actualizar") +" un Nicho. Consulte al administrador del sistema";
                 return Json(oResponse);
             }
         }
@@ -172,12 +249,36 @@ namespace SW.CEMENTERIO.Controllers
                 scope.Dispose();
                 return Json(oResponse); ;
             }
-            catch (Exception e)
+            catch (TimeoutException)
             {
                 oResponse.Tipo = 2;
                 oResponse.Estado = false;
                 oResponse.Titulo = "Error";
-                oResponse.Mensaje = e.Message;
+                oResponse.Mensaje = "Tiempo de espera superado. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (SqlException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en Base de Datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (DbException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en conexión a base de datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (Exception)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error al momento de eliminar un Nicho. Consulte al administrador del sistema";
                 return Json(oResponse);
             }
         }
