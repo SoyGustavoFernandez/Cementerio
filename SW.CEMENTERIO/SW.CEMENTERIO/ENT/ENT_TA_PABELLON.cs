@@ -100,11 +100,6 @@ namespace SW.CEMENTERIO.EntityLayer
 		/// </summary>
 		public bool PABB_ESTADO { get; set; }
 
-		/// <summary>
-		/// Gets or sets the UBICACION value. 
-		/// </summary>
-		public IFormFile UBICACIONFILE { get; set; }
-
 		#endregion
 	}
 }

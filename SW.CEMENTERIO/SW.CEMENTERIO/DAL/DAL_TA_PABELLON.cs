@@ -204,6 +204,37 @@ namespace SW.CEMENTERIO.DataAccessLayer
 		}
 
 
-		#endregion
-	}
+        /// <summary>
+        /// Guarda un registro de la ubicación en la tabla TA_PABELLON.
+        /// </summary>
+        public void UpdateUbicacion(ENT_TA_PABELLON x_oENT_TA_PABELLON)
+        {
+
+            SqlParameter[] parameters = null;
+            try
+            {
+                parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@PABN_IDPABELLON", x_oENT_TA_PABELLON.PABN_IDPABELLON),
+                    new SqlParameter("@PABS_UBICACION", x_oENT_TA_PABELLON.PABS_UBICACION),
+                    new SqlParameter("@PABS_USUMODIFICA", x_oENT_TA_PABELLON.PABS_USUMODIFICA),
+                    new SqlParameter("@PABD_FECMODIFICA", x_oENT_TA_PABELLON.PABD_FECMODIFICA)
+                };
+            }
+            catch (Exception ex)
+            {
+                throw controlarExcepcion("Error de asignación de parámetros.", ex);
+            }
+
+            try
+            {
+                ejecutarNonQuery("TA_PABELLON_UpdateUbicacion", parameters);
+            }
+            catch (Exception ex)
+            {
+                throw controlarExcepcion("Error de operación de acceso a datos.", ex);
+            }
+        }
+        #endregion
+    }
 }

@@ -97,10 +97,6 @@
                             <div class="invalid-feedback">Es un campo obligatorio</div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <label for="formFile" class="form-label">Croquis</label>
-                        <input class="form-control" type="file" id="filePabellon">
-                    </div>
                     <div class="col-md-12" id="tablaAdicional">
                         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                             <div class="ms-auto">
@@ -164,26 +160,24 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalCroquis" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal" id="modalMapa" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="lblmodalCroquis"></h5>
+                <h5 class="modal-title" id="lblmodalMapa"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="col-12 col-lg-12 col-xl-12">
-                    <div class="card overflow-hidden radius-10">
-                        <div class="card-body">
-                            <div class="d-flex align-items-start justify-content-between">
-                                <img id="imgCroquis" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <input type="text" id="idMapa" hidden />
+                <div id="map" style="height: 400px;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="guardarUbicacion()" id="btnMapa">Guardar</button>
             </div>
         </div>
     </div>
 </div>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIU6rgZmH9kFqtj3X2s3dPh2qERAN-yDI&callback=initMap" async defer></script>
 <script src="~/js/pabellon.js"></script>

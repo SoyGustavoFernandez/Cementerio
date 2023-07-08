@@ -1,4 +1,6 @@
 ﻿var bus_det = true;
+var map;
+var selectedLocation;
 
 $(document).ready(function () {
     buscar();
@@ -28,21 +30,15 @@ function buscar() {
                 }
             },
             {
-                targets: 2,
-                data: 'pabS_UBICACION',
-                className: "text-center",
-                render: function (data, obj, full) {
-                    return (es_vacio(data)) ? "-" : `<button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="verCroquis(` + full.pabN_IDPABELLON + `)"><i class="lni lni-eye"></i></button>`;
-                }
-            },
-            {
                 targets: 3,
                 data: 'pabN_IDPABELLON',
                 orderable: false,
                 width: "20%",
                 render: function (data) {
-                    return `<button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="verPabellon(` + data + `)"><i class="fadeIn animated bx bx-pencil"></i></button>
-                            <button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="eliminarPabellon(` + data + `)"><i class="fadeIn animated bx bx-trash-alt"></i></button>`;
+                    return `
+                    <button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="verMapa(` + data + `)"><i class="fadeIn animated bx bx-map"></i></button>
+                    <button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="verPabellon(` + data + `)"><i class="fadeIn animated bx bx-pencil"></i></button>
+                    <button class="btn btn-sm btn-clean btn-icon btn-icon-md" type="button" onclick="eliminarPabellon(` + data + `)"><i class="fadeIn animated bx bx-trash-alt"></i></button>`;
                 }
             }
         ],
@@ -57,7 +53,6 @@ function addPabellon() {
     let _id = $("#idPabellon").val();
     let _nombre = $("#nombrePabellon").val();
     let _tipo = $('input[name="rbPabellon"]:checked').attr("valor");
-    let _ubicacion = $("#filePabellon").get(0).files[0];
     if (!$("#nombrePabellon").get(0).checkValidity() || !$('[name="rbPabellon"]').get(0).checkValidity()) {
         $("#formPabellon").addClass('was-validated');
     } else {
@@ -67,7 +62,6 @@ function addPabellon() {
         formData.append("PABS_NOMBRE", _nombre);
         formData.append("PABS_TIPO", _tipo);
         formData.append("PABS_UBICACION", "");
-        formData.append("UBICACIONFILE", _ubicacion);
     $.ajax({
         type: "POST",
         url: "Pabellon/Guardar",
@@ -341,16 +335,135 @@ function CargaMasivaPabellon() {
     $("#modalCargaMasiva").modal("hide");
 }
 
-function verCroquis(id) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function placeMarker(location) {
+    // Elimina el marcador anterior (si existe)
+    if (selectedLocation) {
+        selectedLocation.setMap(null);
+    }
+
+    // Crea un nuevo marcador en el punto seleccionado
+    selectedLocation = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+}
+
+function verMapa(id) {
+    limpiarDatos();
+    if (es_vacio(id)) {
+        $("#lblmodalMapa").html("Seleccionar Ubicación");
+        $("#idMapa").val("");
+        $("#btnMapa").html("Registrar");
+        // Obtén la ubicación actual del usuario
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var currentLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            // Crea el mapa centrado en la ubicación actual
+            crearMapa(currentLocation);
+        });
+    } else {
+        $("#btnMapa").html("Actualizar");
+        $.ajax({
+            type: "POST",
+            url: "Pabellon/Buscar",
+            data: { idPabellon: id },
+            dataType: 'json',
+            success: function (data) {
+                if (data.estado) {
+                    $("#idMapa").val(data.datos[0].pabN_IDPABELLON);
+                    $("#lblmodalMapa").html(data.datos[0].pabS_NOMBRE);
+                    if (!es_vacio(data.datos[0].pabS_UBICACION)) {
+                        var currentLocation = {
+                            lat: parseFloat(data.datos[0].pabS_UBICACION.split('/')[0]),
+                            lng: parseFloat(data.datos[0].pabS_UBICACION.split('/')[1])
+                        };
+
+                        // Crea el mapa centrado en la ubicación actual
+                        crearMapa(currentLocation);
+                    }
+                } else {
+                    mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
+                }
+            },
+            error: function (error) {
+                mostrarMensaje("Error", "Código: " + error.status + " - " + error.responseText, 2, true);
+            }
+        });
+    }
+    $("#modalMapa").modal("show");
+}
+
+function initMap() {
+    // Obtén la ubicación actual del usuario
+    navigator.geolocation.getCurrentPosition(function (position) {
+        var currentLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
+        // Crea el mapa centrado en la ubicación actual
+        crearMapa(currentLocation);
+    });
+}
+
+function crearMapa(currentLocation) {
+    return new Promise(function (resolve, reject) {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: currentLocation,
+            zoom: 18
+        });
+
+        map.addListener('click', function (event) {
+            placeMarker(event.latLng);
+        });
+
+        // Añadir marcador en la ubicación actual
+        var marker = new google.maps.Marker({
+            position: currentLocation,
+            map: map
+        });
+
+        resolve();
+    });
+}
+
+function guardarUbicacion() {
+    var id = $("#idMapa").val();
+    var selectedLatLng = selectedLocation.getPosition();
+    var latitude = selectedLatLng.lat();
+    var longitude = selectedLatLng.lng();
+    var coordenadas = latitude + "/" + longitude;
+
+    var formData = new FormData();
+    formData.append("PABN_IDPABELLON", id);
+    formData.append("PABS_UBICACION", coordenadas);
+
     $.ajax({
         type: "POST",
-        url: "Pabellon/Buscar",
-        data: { idPabellon: id },
+        url: "Pabellon/GuardarUbicacion",
+        contentType: false,
+        processData: false,
+        data: formData,
         dataType: 'json',
         success: function (data) {
             if (data.estado) {
-                $("#lblmodalCroquis").html(data.datos[0].pabS_NOMBRE);
-                $("#imgCroquis").attr('src', data.datos[0].pabS_UBICACION)
+                buscar();
             } else {
                 mostrarMensaje(data.titulo, data.mensaje, data.tipo, true);
             }
@@ -359,5 +472,5 @@ function verCroquis(id) {
             mostrarMensaje("Error", "Codigo: " + error.status + " - " + error.responseText, 2, true);
         }
     });
-    $("#modalCroquis").modal("show");
+    $('#modalMapa').modal('hide');
 }

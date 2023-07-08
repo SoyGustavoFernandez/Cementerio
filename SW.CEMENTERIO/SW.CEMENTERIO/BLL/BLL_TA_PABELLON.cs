@@ -67,6 +67,14 @@ namespace SW.CEMENTERIO.BusinessLogicLayer
 		}
 
 
-		#endregion
-	}
+        /// <summary>
+        /// Guarda un registro de la ubicación en la tabla TA_PABELLON.
+        /// </summary>
+        public void UpdateUbicacion(ENT_TA_PABELLON x_oENT_TA_PABELLON)
+        {
+            new DAL_TA_PABELLON().UpdateUbicacion(x_oENT_TA_PABELLON);
+        }
+
+        #endregion
+    }
 }

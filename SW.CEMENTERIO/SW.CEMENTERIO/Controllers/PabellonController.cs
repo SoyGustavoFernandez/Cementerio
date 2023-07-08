@@ -15,6 +15,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
 
+using GoogleMaps.LocationServices;
+using GoogleMapsApi;
+using GoogleMapsApi.Entities.Directions.Request;
+using GoogleMapsApi.Entities.Directions.Response;
+using GoogleMapsApi.Entities.Geocoding.Request;
+using GoogleMapsApi.Entities.Geocoding.Response;
+
+
 namespace SW.CEMENTERIO.Controllers
 {
     public class PabellonController : Controller
@@ -99,7 +107,7 @@ namespace SW.CEMENTERIO.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Guardar(ENT_TA_PABELLON objPabellon)
+        public JsonResult Guardar(ENT_TA_PABELLON objPabellon)
         {
             ResponseViewModel oResponse = new();
             try
@@ -107,14 +115,11 @@ namespace SW.CEMENTERIO.Controllers
                 BLL_TA_PABELLON pabellonLN = new BLL_TA_PABELLON();
                 if (objPabellon.PABN_IDPABELLON == 0)
                 {
-                    objPabellon.PABS_UBICACION = "";// await GuardarArchivoEnDisco(objPabellon.UBICACIONFILE, null);
                     objPabellon.PABS_USUREGISTRO = HttpContext.Session.GetString("idTrabajador"); ;
                     pabellonLN.Insert(objPabellon);
                 }
                 else
                 {
-                    ENT_TA_PABELLON objPabellonTMP = pabellonLN.Select(objPabellon.PABN_IDPABELLON);
-                    objPabellon.PABS_UBICACION = await GuardarArchivoEnDisco(objPabellon.UBICACIONFILE, objPabellonTMP.PABS_UBICACION);
                     objPabellon.PABS_USUMODIFICA = HttpContext.Session.GetString("idTrabajador");
                     objPabellon.PABD_FECMODIFICA = DateTime.Now;
                     pabellonLN.Update(objPabellon);
@@ -316,39 +321,56 @@ namespace SW.CEMENTERIO.Controllers
             }
         }
 
-        public async Task<string> GuardarArchivoEnDisco(IFormFile upload, string ArchivoAnterior)
+        [HttpPost]
+        public JsonResult GuardarUbicacion(ENT_TA_PABELLON objPabellon)
         {
-            string RutaFinal = "";
+            ResponseViewModel oResponse = new();
             try
             {
-                //Validar si no existe directorio
-                if (!Directory.Exists(Path.Combine(_environment.ContentRootPath, "Pabellones")))
-                    Directory.CreateDirectory(Path.Combine(_environment.ContentRootPath, "Pabellones"));
-                else
-                {
-                    //Validar si existe archivo
-                    if (string.IsNullOrEmpty(ArchivoAnterior))
-                    {
-                        var filename = Path.Combine(_environment.ContentRootPath, "Pabellones", upload.FileName);
-                        RutaFinal = "http://127.0.0.1:8887/" + upload.FileName;
-                        await upload.CopyToAsync(new FileStream(filename, FileMode.Create));
-                    }
-                    else
-                    {
-                        var filename = Path.Combine(_environment.ContentRootPath, "Pabellones", upload.FileName);
-                        RutaFinal = "http://127.0.0.1:8887/" + upload.FileName;
-                        await upload.CopyToAsync(new FileStream(filename, FileMode.Create));
+                BLL_TA_PABELLON pabellonLN = new BLL_TA_PABELLON();
+                objPabellon.PABS_USUMODIFICA = HttpContext.Session.GetString("idTrabajador");
+                objPabellon.PABD_FECMODIFICA = DateTime.Now;
+                pabellonLN.UpdateUbicacion(objPabellon);
 
-                        if (System.IO.File.Exists(ArchivoAnterior))
-                            System.IO.File.Delete(ArchivoAnterior);
-                    }
-                }
+                oResponse.Estado = true;
+                oResponse.Titulo = "Éxito";
+                oResponse.AdicionalInt = objPabellon.PABN_IDPABELLON;
+                oResponse.Mensaje = "Ubicación " + (objPabellon.PABN_IDPABELLON == 0 ? "registrada" : "actualizada") + " correctamente";
+                oResponse.Tipo = 1;
+                return Json(oResponse); ;
             }
-            catch (Exception e)
+            catch (TimeoutException)
             {
-                _objExecute.controlarExcepcion("Error en Base de Datos, contactar al Administrador", e);
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Tiempo de espera superado. Consulte al administrador del sistema";
+                return Json(oResponse);
             }
-            return RutaFinal;
+            catch (SqlException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en Base de Datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (DbException)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error en conexión a base de datos. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
+            catch (Exception)
+            {
+                oResponse.Tipo = 2;
+                oResponse.Estado = false;
+                oResponse.Titulo = "Error";
+                oResponse.Mensaje = "Error al momento de " + (objPabellon.PABN_IDPABELLON == 0 ? "registrar" : "actualizar") + " un Pabellón. Consulte al administrador del sistema";
+                return Json(oResponse);
+            }
         }
     }
 }

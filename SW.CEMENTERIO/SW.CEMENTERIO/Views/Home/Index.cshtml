@@ -59,7 +59,6 @@
     <!-- Main JS-->
     <script src="assets/js/main.js"></script>
     <script src="~/js/util.js"></script>
-    <script src="~/js/home.js"></script>
 
     <title>Cementerio Metropolitano</title>
 </head>
@@ -148,9 +147,7 @@
                 <div class="col-12 col-lg-8 col-xl-9">
                     <div class="card overflow-hidden radius-10">
                         <div class="card-body">
-                            <div class="mt-5 d-flex align-items-start justify-content-between">
-                                <img id="imgPabellon" />
-                            </div>
+                            <div id="map" style="height: 460px;"></div>
                         </div>
                     </div>
                 </div>
@@ -158,5 +155,8 @@
         </div>
     </div>
     <!--end wrapper-->
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIU6rgZmH9kFqtj3X2s3dPh2qERAN-yDI&callback=initMap" async defer></script>
+    <script src="~/js/home.js"></script>
 </body>
 </html>
