@@ -1,4 +1,8 @@
-﻿function buscarSerQuerido() {
+﻿$(document).ready(function () {
+    $("#divLogoCementerio").show();
+});
+
+function buscarSerQuerido() {
     $("#tablaDifunto tbody").html("");
     let _nombre = $("#nombreDifunto").val();
     let _paterno = $("#nombrePaterno").val();
@@ -21,6 +25,7 @@
                 if (data.estado) {
                     llenarTabla(data);
                     $("#tablaGeneral").show();
+                    $("#divLogoCementerio").hide();
                     $("#Detalle").hide();
                     $("#formDifunto").removeClass('was-validated');
                 } else {

@@ -183,6 +183,14 @@ namespace SW.CEMENTERIO.Controllers
             ResponseViewModel oResponse = new();
             try
             {
+                if(string.IsNullOrEmpty(objDifunto.DIFS_NOMBRES) && string.IsNullOrEmpty(objDifunto.DIFS_APEPATERNO) && string.IsNullOrEmpty(objDifunto.DIFS_APEMATERNO))
+                {
+                    oResponse.Tipo = 2;
+                    oResponse.Estado = false;
+                    oResponse.Titulo = "Error";
+                    oResponse.Mensaje = "Ingrese un parámetro a buscar";
+                    return Json(oResponse);
+                }
                 List<ENT_TA_DIFUNTO> modelo = new List<ENT_TA_DIFUNTO>();
                 BLL_TA_DIFUNTO difuntoLN = new BLL_TA_DIFUNTO();
                 modelo = difuntoLN.BuscarSerQuerido(objDifunto);
